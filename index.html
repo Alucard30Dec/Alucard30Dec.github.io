@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -355,21 +355,45 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
+                
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
+                
                 if (targetElement) {
-                    // Tính toán vị trí cuộn, trừ đi chiều cao của header
-                    const headerOffset = 80; // Chiều cao header khoảng 80px
+                    const headerOffset = 80; // Chiều cao header (bù trừ)
                     const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
+                    const targetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    // Hàm cuộn mượt tùy chỉnh, 1000ms = 1 giây
+                    smoothScrollTo(targetPosition, 1000); 
                 }
             });
         });
+
+        // Hàm cuộn mượt tùy chỉnh với requestAnimationFrame
+        function smoothScrollTo(targetPosition, duration) {
+            const startPosition = window.pageYOffset; // Vị trí bắt đầu
+            const distance = targetPosition - startPosition; // Khoảng cách cần cuộn
+            let startTime = null;
+
+            // Hàm animation
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                
+                // Hàm Easing (ease-in-out) để mượt hơn
+                const ease = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                const run = ease(Math.min(timeElapsed / duration, 1));
+                
+                window.scrollTo(0, startPosition + distance * run);
+                
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                }
+            }
+
+            requestAnimationFrame(animation);
+        }
     </script>
 
 </body>
