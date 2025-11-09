@@ -1,414 +1,299 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoang Van Thien - Portfolio</title>
-    <!-- Tải Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Tải font Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Cài đặt Tailwind để sử dụng font Inter -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                },
-            },
-        }
-    </script>
-    <!-- CSS Tùy chỉnh cho kiểu dáng bổ sung -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa; /* Màu nền xám rất nhạt */
-            color: #212529; /* Màu văn bản tối */
-        }
-        /* Hiệu ứng bo mạch cho các phần tử được làm nổi bật */
-        .card-border {
-            border: 1px solid #e9ecef; /* Viền xám nhạt */
-            transition: all 0.3s ease;
-        }
-        .card-border:hover {
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            transform: translateY(-2px);
-        }
-        /* Kiểu nút */
-        .btn {
-            @apply inline-block px-6 py-3 rounded-full text-sm font-medium transition-all duration-300;
-        }
-        .btn-dark {
-            @apply bg-gray-900 text-white hover:bg-gray-700;
-        }
-        .btn-light {
-            @apply bg-white text-gray-900 border border-gray-300 hover:bg-gray-100;
-        }
-        /* Icon SVG */
-        .icon-link svg {
-            @apply w-6 h-6 text-gray-700 transition-colors duration-300 hover:text-black;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hoang Van Thien - Portfolio</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind config (dùng font Inter) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+
+  <!-- CSS tách riêng -->
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body class="antialiased">
 
-    <!-- Header & Navigation -->
-    <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 shadow-sm border-b border-gray-200">
-        <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Tên -->
-            <a href="#home" class="text-xl font-bold text-gray-900">
-                Hoang Van Thien
-            </a>
-            <!-- Liên kết điều hướng cho Desktop -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#about" class="text-gray-700 hover:text-black transition-colors">Profile</a>
-                <a href="#skills" class="text-gray-700 hover:text-black transition-colors">Skills</a>
-                <a href="#projects" class="text-gray-700 hover:text-black transition-colors">Projects</a>
-                <a href="#contact" class="text-gray-700 hover:text-black transition-colors">Contact</a>
-            </div>
-            <!-- Nút menu cho Mobile (Chưa có chức năng, chỉ là hình ảnh) -->
-            <div class="md:hidden">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </div>
-        </nav>
-    </header>
+  <!-- Header & Navigation -->
+  <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 shadow-sm border-b border-gray-200">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#home" class="text-xl font-bold text-gray-900">Hoang Van Thien</a>
 
-    <!-- Phần chính -->
-    <main class="max-w-6xl mx-auto px-6 pt-24 md:pt-32">
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="#about" class="text-gray-700 hover:text-black transition-colors">Profile</a>
+        <a href="#skills" class="text-gray-700 hover:text-black transition-colors">Skills</a>
+        <a href="#projects" class="text-gray-700 hover:text-black transition-colors">Projects</a>
+        <a href="#contact" class="text-gray-700 hover:text-black transition-colors">Contact</a>
+      </div>
 
-        <!-- 1. Phần Giới thiệu (Hero) -->
-        <section id="home" class="min-h-[60vh] flex items-center py-16">
-            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <!-- Hình ảnh (Bên trái trên mobile, bên phải trên desktop) -->
-                <div class="order-1 md:order-2 flex justify-center">
-                    <img 
-                        src="https://placehold.co/300x300/E0E0E0/333?text=HVT" 
-                        alt="Hoang Van Thien"
-                        class="rounded-full shadow-xl w-60 h-60 md:w-80 md:h-80 object-cover border-4 border-white"
-                        onerror="this.src='https://placehold.co/300x300/E0E0E0/333?text=HVT'; this.onerror=null;"
-                    >
-                    <!-- Thay thế 'https://placehold.co/...' bằng URL hình ảnh thực của bạn -->
-                </div>
-                <!-- Văn bản (Bên phải trên mobile, bên trái trên desktop) -->
-                <div class="order-2 md:order-1 text-center md:text-left">
-                    <span class="text-lg font-medium text-gray-600">I am</span>
-                    <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mt-1 mb-4">Hoang Van Thien</h1>
-                    <h2 class="text-2xl font-medium text-gray-700">Software Engineering Student</h2>
-                    
-                    <!-- Các nút hành động -->
-                    <div class="mt-8 flex justify-center md:justify-start space-x-4">
-                        <a href="#contact" class="btn btn-dark">Contact Me</a>
-                        
-                        <!-- *** ĐÂY LÀ DÒNG ĐÃ SỬA *** -->
-                        <a href="CV_HOANGVANTHIEN.pdf" class="btn btn-light" target="_blank" rel="noopener noreferrer">View Resume</a>
-                        <!-- *** KẾT THÚC DÒNG ĐÃ SỬA *** -->
-                        
-                    </div>
-                    
-                    <!-- Các liên kết xã hội -->
-                    <div class="mt-8 flex justify-center md:justify-start space-x-5">
-                        
-                        <!-- GitHub (Đã sửa link) -->
-                        <a href="https://github.com/Alucard30Dec" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="GitHub">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.488.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.09.39-1.984 1.03-2.682-.103-.253-.446-1.27.098-2.646 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.819c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.376.202 2.393.1 2.646.64.698 1.03 1.592 1.03 2.682 0 3.842-2.338 4.685-4.566 4.935.359.309.678.92.678 1.853 0 1.338-.012 2.419-.012 2.747 0 .267.18.577.688.48C19.135 20.165 22 16.418 22 12 22 6.477 17.523 2 12 2z" clip-rule="evenodd" /></svg>
-                        </a>
-                        
-                        <!-- LinkedIn -->
-                        <a href="https://www.linkedin.com/in/thi%C3%AAn-ho%C3%A0ng-9427732b5/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
+      <div class="md:hidden">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </div>
+    </nav>
+  </header>
 
-                        <!-- Codeforces (Mới) -->
-                        <a href="https://codeforces.com/profile/HgThien" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Codeforces">
-                            <svg fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6"><path d="M3 21h3v-8H3v8zm4 0h3V11H7v10zm4 0h3V3h-3v18zm4 0h3v-6h-3v6zm4 0h3V7h-3v14z"/></svg>
-                        </a>
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto px-6 pt-24 md:pt-32">
 
-                        <!-- LeetCode (Mới) -->
-                        <a href="https://leetcode.com/alucard30dec" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LeetCode">
-                            <svg fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6"><path d="M12.92 11.64h2.71v-1.46h-2.71v1.46zm-4.32 0h2.7v-1.46h-2.7v1.46zm-4.31 0h2.7v-1.46H4.29v1.46zm14 3.6h-2.71v1.46h2.71v-1.46zm-4.32 0h-2.7v1.46h2.7v-1.46zm-4.31 0H8.6v1.46h2.7v-1.46zm-4.3 0H4.3v1.46h2.7v-1.46zm14-5.06h-2.71v1.46h2.71v-1.46zM20.9 2H3.1C2.5 2 2 2.5 2 3.1v17.8C2 21.5 2.5 22 3.1 22h17.8c.6 0 1.1-.5 1.1-1.1V3.1C22 2.5 21.5 2 20.9 2zM19.44 19.54H4.56V4.46h14.88v15.08z"/></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. Phần Giới thiệu về tôi (About Me) -->
-        <section id="about" class="py-24">
-            <div class="text-center mb-12">
-                <span class="text-sm font-medium text-gray-500">Here are some facts</span>
-                <h2 class="text-4xl font-bold mt-1">About Me</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-                <!-- Hình ảnh phụ -->
-                <div class="flex justify-center">
-                    <img 
-                        src="https://placehold.co/450x300/E0E0E0/333?text=Profile+Image" 
-                        alt="Profile Image"
-                        class="rounded-2xl shadow-lg object-cover w-full h-auto"
-                        onerror="this.src='https://placehold.co/450x300/E0E0E0/333?text=Profile+Image'; this.onerror=null;"
-                    >
-                     <!-- Thay thế bằng một hình ảnh khác của bạn -->
-                </div>
-                <!-- Văn bản & Giáo dục -->
-                <div>
-                    <div class="bg-white p-8 rounded-2xl card-border mb-6">
-                        <div class="flex items-center space-x-4">
-                            <div class="bg-gray-100 p-3 rounded-full">
-                                <!-- Icon Giáo dục -->
-                                <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 21.052a11.952 11.952 0 01-6.824-4.001 12.083 12.083 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7"></path></svg>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold">Education</h3>
-                                <p class="text-gray-600">Ho Chi Minh City University of Economics and Finance - UEF</p>
-                                <p class="text-gray-600">B.S. in Software Engineering (GPA: 3.10/4)</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        I'm a fourth-year Software Engineering student with a solid foundation in algorithms, data structures, and software development. As an active member of Competitive Programming, I have participated in national and university contests, including the Vietnam Student Informatics Olympiad.
-                    </p>
-                    <p class="text-lg text-gray-700 leading-relaxed mt-4">
-                        I am able to solve problems under pressure and am ready to apply my technical skills to real-life projects. I am currently looking for an internship where I can deliver clean code while gaining more experience.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. Phần Kỹ năng (Skills) -->
-        <section id="skills" class="py-24 bg-white rounded-3xl my-16 card-border">
-            <div class="text-center mb-12">
-                <span class="text-sm font-medium text-gray-500">Here's what I can do</span>
-                <h2 class="text-4xl font-bold mt-1">Skills</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Lập trình & Frameworks -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-                    <h3 class="text-2xl font-semibold mb-6 text-center">Programming & Frameworks</h3>
-                    <div class="grid grid-cols-2 gap-x-6 gap-y-4">
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">Java</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">C</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">C#</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">ASP.NET MVC</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">Web API</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">Java Servlet</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Cơ sở dữ liệu & Công cụ khác -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-                    <h3 class="text-2xl font-semibold mb-6 text-center">Database & Other Tools</h3>
-                    <div class="grid grid-cols-2 gap-x-6 gap-y-4">
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">MS SQL Server</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">MySQL</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">Git</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">Machine Learning (C++)</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span class="text-lg">MVC Pattern</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- 4. Phần Dự án (Projects) -->
-        <section id="projects" class="py-24">
-            <div class="text-center mb-12">
-                <span class="text-sm font-medium text-gray-500">Here are my newest</span>
-                <h2 class="text-4xl font-bold mt-1">Projects</h2>
-            </div>
-            
-            <!-- Lưới dự án -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Dự án 1: Predic Houseprice -->
-                <div class="bg-white rounded-2xl overflow-hidden card-border flex flex-col">
-                    <img src="https://placehold.co/400x250/E0E0E0/333?text=Predic+Houseprice" alt="Predic Houseprice" class="w-full h-48 object-cover">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-semibold mb-2">Predic Houseprice - AI</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">A house price prediction system in C++ using the Random Forest algorithm.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">C++</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">Machine Learning</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">Random Forest</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dự án 2: Restaurant Order App -->
-                <div class="bg-white rounded-2xl overflow-hidden card-border flex flex-col">
-                    <img src="https://placehold.co/400x250/E0E0E0/333?text=Restaurant+App" alt="Restaurant Order App" class="w-full h-48 object-cover">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-semibold mb-2">Restaurant Order App</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">A C# .NET desktop application for managing restaurant orders with a SQL Server backend.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">C#</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">.NET</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">SQL Server</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">Desktop App</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dự án 3: Online Food Ordering -->
-                <div class="bg-white rounded-2xl overflow-hidden card-border flex flex-col">
-                    <img src="https://placehold.co/400x250/E0E0E0/333?text=Food+Ordering" alt="Online Food Ordering" class="w-full h-48 object-cover">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-semibold mb-2">Online Food Ordering</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">A servlet-based web app for browsing menus, managing carts, and placing orders.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">Java</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">Servlet</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">JSP</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">MySQL</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">Bootstrap</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Dự án 4: Clinic Management System -->
-                <div class="bg-white rounded-2xl overflow-hidden card-border flex flex-col">
-                    <img src="https://placehold.co/400x250/E0E0E0/333?text=Clinic+System" alt="Clinic Management System" class="w-full h-48 object-cover">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-semibold mb-2">Clinic Management System</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">An ASP.NET MVC system to manage doctors, receptionists, patients, and appointments.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">ASP.NET MVC</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">Java</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">SQL Server</span>
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">Entity Framework</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 5. Phần Liên hệ (Contact) -->
-        <section id="contact" class="py-24 text-center">
-            <h2 class="text-4xl font-bold mb-8">Contact</h2>
-            
-            <p class="text-lg text-gray-600 mb-8">Feel free to reach out. I'm available for internships and collaborations.</p>
-
-            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
-                <!-- Nút Email -->
-                <!-- *** ĐÂY LÀ DÒNG ĐÃ SỬA *** -->
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hoangvanthien301203@gmail.com" target="_blank" rel="noopener noreferrer" class="bg-white rounded-full py-4 px-8 card-border flex items-center space-x-3 group">
-                <!-- *** KẾT THÚC DÒNG ĐÃ SỬA *** -->
-                    <!-- Icon Mail -->
-                    <svg class="w-6 h-6 text-gray-600 group-hover:text-black transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span class="text-lg font-medium text-gray-800 group-hover:text-black transition-colors">hoangvanthien301203@gmail.com</span>
-                </a>
-                
-                <!-- Nút Điện thoại -->
-                <a href="tel:+84379135123" class="bg-white rounded-full py-4 px-8 card-border flex items-center space-x-3 group">
-                    <!-- Icon Phone -->
-                    <svg class="w-6 h-6 text-gray-600 group-hover:text-black transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.212l-2.257 1.129a1 1 0 00-.416 1.176l3.658 7.318a1 1 0 001.176.416l1.129-2.257a1 1 0 011.212-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                    <span class="text-lg font-medium text-gray-800 group-hover:text-black transition-colors">+84 379 135 123</span>
-                </a>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-gray-200 mt-16">
-        <div class="max-w-6xl mx-auto px-6 py-12 text-center">
-            <div class="flex justify-center space-x-6 mb-6 md:hidden">
-                <a href="#about" class="text-gray-700 hover:text-black transition-colors">Profile</a>
-                <a href="#skills" class="text-gray-700 hover:text-black transition-colors">Skills</a>
-                <a href="#projects" class="text-gray-700 hover:text-black transition-colors">Projects</a>
-                <a href="#contact" class="text-gray-700 hover:text-black transition-colors">Contact</a>
-            </div>
-            <p class="text-gray-500 text-sm">
-                Copyright © 2025 Hoang Van Thien. All Rights Reserved.
-            </p>
+    <!-- Hero -->
+    <section id="home" class="min-h-[60vh] flex items-center py-16">
+      <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <!-- Avatar -->
+        <div class="order-1 md:order-2 flex justify-center">
+          <img
+            src="https://placehold.co/300x300/E0E0E0/333?text=HVT"
+            alt="Hoang Van Thien"
+            class="rounded-full shadow-xl w-60 h-60 md:w-80 md:h-80 object-cover border-4 border-white"
+            onerror="this.src='https://placehold.co/300x300/E0E0E0/333?text=HVT'; this.onerror=null;"
+          />
         </div>
-    </footer>
 
-    <!-- JavaScript cho cuộn mượt mà -->
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    const headerOffset = 80; // Chiều cao header (bù trừ)
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const targetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
-                    // Hàm cuộn mượt tùy chỉnh, 1000ms = 1 giây
-                    smoothScrollTo(targetPosition, 1000); 
-                }
-            });
-        });
+        <!-- Title -->
+        <div class="order-2 md:order-1 text-center md:text-left">
+          <span class="text-lg font-medium text-gray-600">I am</span>
+          <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mt-1 mb-4">Hoang Van Thien</h1>
+          <h2 class="text-2xl font-medium text-gray-700">Software Engineering Student</h2>
 
-        // Hàm cuộn mượt tùy chỉnh với requestAnimationFrame
-        function smoothScrollTo(targetPosition, duration) {
-            const startPosition = window.pageYOffset; // Vị trí bắt đầu
-            const distance = targetPosition - startPosition; // Khoảng cách cần cuộn
-            let startTime = null;
+          <div class="mt-8 flex justify-center md:justify-start space-x-4">
+            <a href="#contact" class="btn btn-dark">Contact Me</a>
+            <a href="CV_HOANGVANTHIEN.pdf" class="btn btn-light" target="_blank" rel="noopener noreferrer">View Resume</a>
+          </div>
 
-            // Hàm animation
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                
-                // Hàm Easing (ease-in-out) để mượt hơn
-                const ease = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-                const run = ease(Math.min(timeElapsed / duration, 1));
-                
-                window.scrollTo(0, startPosition + distance * run);
-                
-                if (timeElapsed < duration) {
-                    requestAnimationFrame(animation);
-                }
-            }
+          <!-- Social -->
+          <div class="mt-8 flex justify-center md:justify-start space-x-5">
+            <!-- GitHub -->
+            <a href="https://github.com/Alucard30Dec" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.488.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.09.39-1.984 1.03-2.682-.103-.253-.446-1.27.098-2.646 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.819c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.376.202 2.393.1 2.646.64.698 1.03 1.592 1.03 2.682 0 3.842-2.338 4.685-4.566 4.935.359.309.678.92.678 1.853 0 1.338-.012 2.419-.012 2.747 0 .267.18.577.688.48C19.135 20.165 22 16.418 22 12 22 6.477 17.523 2 12 2z" clip-rule="evenodd"/>
+              </svg>
+            </a>
 
-            requestAnimationFrame(animation);
-        }
-    </script>
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/thi%C3%AAn-ho%C3%A0ng-9427732b5/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
 
+            <!-- Codeforces -->
+            <a href="https://codeforces.com/profile/HgThien" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Codeforces">
+              <svg fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                <path d="M3 21h3v-8H3v8zm4 0h3V11H7v10zm4 0h3V3h-3v18zm4 0h3v-6h-3v6zm4 0h3V7h-3v14z"/>
+              </svg>
+            </a>
+
+            <!-- LeetCode -->
+            <a href="https://leetcode.com/alucard30dec" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LeetCode">
+              <svg fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                <path d="M12.92 11.64h2.71v-1.46h-2.71v1.46zm-4.32 0h2.7v-1.46h-2.7v1.46zm-4.31 0h2.7v-1.46H4.29v1.46zm14 3.6h-2.71v1.46h2.71v-1.46zm-4.32 0h-2.7v1.46h2.7v-1.46zm-4.31 0H8.6v1.46h2.7v-1.46zm-4.3 0H4.3v1.46h2.7v-1.46zm14-5.06h-2.71v1.46h2.71v-1.46zM20.9 2H3.1C2.5 2 2 2.5 2 3.1v17.8C2 21.5 2.5 22 3.1 22h17.8c.6 0 1.1-.5 1.1-1.1V3.1C22 2.5 21.5 2 20.9 2zM19.44 19.54H4.56V4.46h14.88v15.08z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-24">
+      <div class="text-center mb-12">
+        <span class="text-sm font-medium text-gray-500">Here are some facts</span>
+        <h2 class="text-4xl font-bold mt-1">About Me</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        <div class="flex justify-center">
+          <img
+            src="https://placehold.co/450x300/E0E0E0/333?text=Profile+Image"
+            alt="Profile Image"
+            class="rounded-2xl shadow-lg object-cover w-full h-auto"
+            onerror="this.src='https://placehold.co/450x300/E0E0E0/333?text=Profile+Image'; this.onerror=null;"
+          />
+        </div>
+
+        <div>
+          <div class="bg-white p-8 rounded-2xl card-border mb-6">
+            <div class="flex items-center space-x-4">
+              <div class="bg-gray-100 p-3 rounded-full">
+                <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 21.052a11.952 11.952 0 01-6.824-4.001 12.083 12.083 0 01-.665-6.479L12 14z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Education</h3>
+                <p class="text-gray-600">Ho Chi Minh City University of Economics and Finance - UEF</p>
+                <p class="text-gray-600">B.S. in Software Engineering (GPA: 3.10/4)</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-lg text-gray-700 leading-relaxed">
+            I'm a fourth-year Software Engineering student with a solid foundation in algorithms, data structures, and software development. As an active member of Competitive Programming, I have participated in national and university contests, including the Vietnam Student Informatics Olympiad.
+          </p>
+          <p class="text-lg text-gray-700 leading-relaxed mt-4">
+            I am able to solve problems under pressure and am ready to apply my technical skills to real-life projects. I am currently looking for an internship where I can deliver clean code while gaining more experience.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="py-24 bg-white rounded-3xl my-16 card-border">
+      <div class="text-center mb-12">
+        <span class="text-sm font-medium text-gray-500">Here's what I can do</span>
+        <h2 class="text-4xl font-bold mt-1">Skills</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
+          <h3 class="text-2xl font-semibold mb-6 text-center">Programming & Frameworks</h3>
+          <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">Java</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">C</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">C#</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">ASP.NET MVC</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">Web API</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">Java Servlet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
+          <h3 class="text-2xl font-semibold mb-6 text-center">Database & Other Tools</h3>
+          <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">MS SQL Server</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">MySQL</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">Git</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">Machine Learning (C++)</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span class="text-lg">MVC Pattern</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="py-24">
+      <div class="text-center mb-12">
+        <h2 class="text-5xl font-extrabold tracking-tight mt-1">Projects</h2>
+      </div>
+
+      <!-- Khối bao bọc để đặt nút ra ngoài không đè lên card -->
+      <div class="relative max-w-6xl mx-auto carousel-3d overflow-visible">
+        <!-- Prev (đặt lệch ra 2 bên bằng lớp -left-*) -->
+        <button id="projPrev"
+          class="nav-arrow absolute -left-8 md:-left-16 top-1/2 -translate-y-1/2"
+          aria-label="Previous project">
+          <svg viewBox="0 0 24 24" class="w-7 h-7"><path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+
+        <!-- Next -->
+        <button id="projNext"
+          class="nav-arrow absolute -right-8 md:-right-16 top-1/2 -translate-y-1/2"
+          aria-label="Next project">
+          <svg viewBox="0 0 24 24" class="w-7 h-7"><path fill="currentColor" d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
+        </button>
+
+        <div id="projTrack" class="flex items-stretch justify-center gap-2 px-2 md:px-4 will-change-transform will-change-opacity">
+          <!-- Render bởi JS -->
+        </div>
+      </div>
+
+      <div id="projDetail" class="max-w-6xl mx-auto mt-10 bg-white rounded-3xl border border-gray-200 shadow-sm p-8 md:p-12 text-center transition-all duration-300">
+        <!-- Render bởi JS -->
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 text-center">
+      <h2 class="text-5xl font-extrabold tracking-tight mt-1 mb-12">Contact</h2>
+
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <!-- Gmail -->
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=hoangvanthien301203@gmail.com"
+          target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center justify-center space-x-3 bg-white text-gray-800 font-medium px-8 py-4 rounded-full card-border btn-pill text-lg w-full sm:w-auto"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"></path></svg>
+          <span>hoangvanthien301203@gmail.com</span>
+        </a>
+
+        <!-- Phone -->
+        <a href="tel:+84379135123"
+           class="inline-flex items-center justify-center space-x-3 bg-white text-gray-800 font-medium px-8 py-4 rounded-full card-border btn-pill text-lg w-full sm:w-auto">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg>
+          <span>+84 379 135 123</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 mt-16">
+    <div class="max-w-6xl mx-auto px-6 py-12 text-center">
+      <div class="flex justify-center space-x-6 mb-6 md:hidden">
+        <a href="#about" class="text-gray-700 hover:text-black transition-colors">Profile</a>
+        <a href="#skills" class="text-gray-700 hover:text-black transition-colors">Skills</a>
+        <a href="#projects" class="text-gray-700 hover:text-black transition-colors">Projects</a>
+        <a href="#contact" class="text-gray-700 hover:text-black transition-colors">Contact</a>
+      </div>
+      <p class="text-gray-500 text-sm">
+        Copyright © 2025 Hoang Van Thien. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- JS tách riêng -->
+  <script src="script.js" defer></script>
 </body>
 </html>

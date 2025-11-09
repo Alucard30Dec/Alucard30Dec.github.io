@@ -1,0 +1,122 @@
+/* ================== BASE & TOKENS ================== */
+:root{
+  --card-w-mobile: 340px;
+  --card-w-desktop: 420px;
+  --overlap: 0.25;
+  --side-shift-mobile: 0.22;
+  --side-shift-desktop: 0.22;
+  --side-depth: -130px;
+  --side-scale: 0.93;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.card-border { border: 1px solid #e9ecef; transition: all .3s ease; }
+.card-border:hover { box-shadow: 0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1); transform: translateY(-2px); }
+
+/* ================== BUTTONS ================== */
+.btn{ display:inline-block; padding:.75rem 1.5rem; border-radius:9999px; font-size:.875rem; font-weight:500; transition:all .3s ease; }
+.btn-dark{ background:#111827; color:#fff; } .btn-dark:hover{ background:#374151; }
+.btn-light{ background:#fff; color:#111827; border:1px solid #d1d5db; } .btn-light:hover{ background:#f3f4f6; }
+.btn-pill{ border:1px solid #e5e7eb; border-radius:9999px; padding:.65rem 1.1rem; font-weight:600; font-size:.9rem; box-shadow:0 6px 16px rgba(0,0,0,.06); transition:all .2s ease; }
+.btn-pill:hover{ transform:translateY(-2px); box-shadow:0 10px 20px rgba(0,0,0,.08); }
+.btn-dark-solid{ background:#0b1220; color:#fff; border-color:#0b1220; } .btn-dark-solid:hover{ filter:brightness(1.05); }
+.btn-light-outline{ background:#fff; color:#111827; border-color:#e5e7eb; } .btn-light-outline:hover{ background:#f9fafb; }
+
+/* ================== SOCIAL ICON ================== */
+.icon-link svg{ width:1.5rem; height:1.5rem; color:#374151; transition:color .3s ease; }
+.icon-link:hover svg{ color:#000; }
+
+/* ================== PROJECTS (Carousel 3D) ================== */
+.carousel-3d { perspective: 1400px; overflow: visible; }
+
+/* Card tổng thể */
+.card3d{
+  background:#fff; border:1px solid #e5e7eb; border-radius:28px;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:0 24px 60px -18px rgba(0,0,0,.25), 0 8px 24px -10px rgba(0,0,0,.12);
+  width:var(--card-w-mobile); cursor:pointer; position:relative; overflow:hidden;
+  will-change: transform, opacity;  /* Tối ưu hiệu năng animation */
+}
+@media (min-width:768px){ .card3d{ width:var(--card-w-desktop); } }
+
+/* Ảnh vuông */
+.card-media{ aspect-ratio:1/1; border-radius:18px; overflow:hidden; background:#f3f4f6;
+  box-shadow:0 4px 22px rgba(0,0,0,.08) inset; display:grid; place-items:center; margin:0 auto 1rem; }
+.card-media img{ width:100%; height:100%; object-fit:cover; }
+
+/* Tiêu đề */
+.project-title{ font-weight:800; font-size:1.25rem; line-height:1.6rem; color:#111827; margin:.25rem 0 1rem; }
+@media (min-width:768px){ .project-title{ font-size:1.5rem; line-height:2rem; } }
+
+/* Padding card */
+.card3d > .p-6{ padding:1.25rem; }
+
+/* Project buttons spacing (push buttons away from card content) */
+.project-buttons{
+  display:flex;
+  justify-content:center;
+  gap:5rem;     /* 16px gap between buttons */
+  margin-top:1rem; /* push buttons further down */
+}
+
+/* Track + animation khi chuyển */
+#projTrack{ 
+  gap:0; 
+  column-gap:0; 
+  padding:0 .5rem; 
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;  /* Tối ưu hiệu năng animation */
+}
+@media (min-width:768px){ #projTrack{ padding:0 1rem; } }
+
+/* Chồng lấp hai bên */
+.card3d--left  { margin-right: calc(-1 * var(--card-w-mobile)  * var(--overlap)); }
+.card3d--right { margin-left:  calc(-1 * var(--card-w-mobile)  * var(--overlap)); }
+@media (min-width:768px){
+  .card3d--left  { margin-right: calc(-1 * var(--card-w-desktop) * var(--overlap)); }
+  .card3d--right { margin-left:  calc(-1 * var(--card-w-desktop) * var(--overlap)); }
+}
+
+/* Card giữa */
+.card3d--active{
+  transform: translateZ(0) rotateY(0) rotateZ(0) scale(1);
+  box-shadow: 0 26px 70px -16px rgba(0,0,0,.28), 0 10px 28px -12px rgba(0,0,0,.14);
+  opacity:1; z-index:3;
+}
+
+/* Hai thẻ bên */
+.card3d--left{
+  transform: translateZ(var(--side-depth)) translateX(calc(-1 * var(--card-w-mobile) * var(--side-shift-mobile))) rotateY(30deg) rotateZ(-2deg) scale(var(--side-scale));
+  opacity:.60; z-index:2; box-shadow: 0 26px 60px -16px rgba(0,0,0,.30), 0 10px 26px -12px rgba(0,0,0,.18);
+}
+.card3d--right{
+  transform: translateZ(var(--side-depth)) translateX(calc(var(--card-w-mobile) * var(--side-shift-mobile))) rotateY(-30deg) rotateZ(2deg) scale(var(--side-scale));
+  opacity:.60; z-index:2; box-shadow: 0 26px 60px -16px rgba(0,0,0,.30), 0 10px 26px -12px rgba(0,0,0,.18);
+}
+@media (min-width:768px){
+  .card3d--left{  transform: translateZ(var(--side-depth)) translateX(calc(-1 * var(--card-w-desktop) * var(--side-shift-desktop))) rotateY(30deg) rotateZ(-2deg) scale(var(--side-scale)); }
+  .card3d--right{ transform: translateZ(var(--side-depth)) translateX(calc(var(--card-w-desktop) * var(--side-shift-desktop))) rotateY(-30deg) rotateZ(2deg) scale(var(--side-scale)); }
+}
+
+/* ================== NAV ARROWS ================== */
+.nav-arrow{
+  width:56px; height:56px; display:grid; place-items:center; border-radius:9999px;
+  background:rgba(107,114,128,.85); color:#fff; box-shadow:0 8px 18px rgba(0,0,0,.18);
+  border:1px solid rgba(0,0,0,.06); transition:transform .15s ease, background .15s ease; cursor:pointer; z-index:10;
+  margin: 0 -3rem;  /* Add margin to push arrows away from cards */
+}
+.nav-arrow:hover{ background:rgba(75,85,99,.9); }
+
+/* ================== GỢI Ý TINH CHỈNH ==================
+- Muốn giống ảnh hơn (ít nghiêng): rotateY(30deg) -> 18–22deg.
+- Muốn sát hơn/xa hơn: --side-shift-mobile / --side-shift-desktop (0.18–0.26).
+- Muốn che nhiều/ít hơn: --overlap (0.20 = 20%, 0.30 = 30%).
+- Tăng/giảm độ lùi & độ nhỏ thẻ bên: --side-depth & --side-scale.
+*/
