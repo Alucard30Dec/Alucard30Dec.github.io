@@ -1,18 +1,18 @@
 // ====== DATA (projects) ======
 const projects = [
   {
-    title: "Student Management",
-    image: "https://placehold.co/420x315/FBBF24/FFF?text=Student+Management",
+    title: "Hotel Management System",
+    image: "Images/HotelManagementSystem.jpg",
     github: "#",
     demo: "#",
-    period: "N/A",
+    period: "",
     summary:
-      "A placeholder project to demonstrate the 3D carousel layout. This could be another one of your amazing projects!",
-    tech: ["HTML", "CSS", "JavaScript"],
+      "In progress",
+    tech: [""],
   },
   {
     title: "Private Clinic Management System",
-    image: "Image/PrivateClinicManagementSystem.jpg",
+    image: "Images/PrivateClinicManagementSystem.jpg",
     github: "https://github.com/Alucard30Dec/Private-Clinic",
     demo: "#",
     period: "09/2025 – 10/2025",
@@ -29,8 +29,8 @@ const projects = [
   },
   {
     title: "Personal Expense Tracker",
-    image: "image/PersonalExpenseTracker.png",
-    github: "#",
+    image: "Images/PersonalExpenseTracker.png",
+    github: "https://github.com/Alucard30Dec/Personal-Expense-Tracker",
     demo: "#",
     period: "10/2025 – 11/2025",
     summary:
