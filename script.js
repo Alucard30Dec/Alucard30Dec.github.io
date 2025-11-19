@@ -5,10 +5,17 @@ const projects = [
     image: "Images/HotelManagementSystem.jpg",
     github: "#",
     demo: "#",
-    period: "",
+    period: "02/2025 – 04/2025",
     summary:
-      "In progress",
-    tech: [""],
+      "A web-based hotel management system that helps staff manage rooms, bookings, customers, and basic reports. Focused on clean separation between UI, business logic and data access.",
+    tech: [
+      "Programming Language: C#, HTML, CSS",
+      "Framework: ASP.NET MVC, Entity Framework",
+      "Database: Microsoft SQL Server / T-SQL",
+      "Architecture: 3-layer architecture (UI / Business Logic / Data Access)",
+      "Features: Room & booking management, customer records, basic reporting",
+      "Tools: Git, Visual Studio, SQL scripts",
+    ],
   },
   {
     title: "Private Clinic Management System",
@@ -19,7 +26,7 @@ const projects = [
     summary:
       "A clinic management system designed to manage doctors, receptionists, and patients efficiently. Supports appointment scheduling, patient records, and staff management with role-based authentication and a layered architecture for scalability and maintainability.",
     tech: [
-      "Programming Language: Java, HTML, CSS",
+      "Programming Language: C#, HTML, CSS",
       "Framework: ASP.NET MVC, Entity Framework",
       "Database: Microsoft SQL Server / T-SQL",
       "Architecture: 3-layer architecture (UI / Business Logic / Data Access)",
@@ -34,7 +41,7 @@ const projects = [
     demo: "#",
     period: "10/2025 – 11/2025",
     summary:
-      "A mobile app for recording and analyzing personal spending. Supports adding expenses with basic details and category management, plus a statistics screen for quick insights into monthly totals and trends. Built as a lightweight Android project focused on smooth local-first use.",
+      "A lightweight Android app for recording and analyzing personal spending. Allows users to add expenses with basic details and categories, and provides a statistics screen for quick insights into monthly totals and trends.",
     tech: [
       "Programming Language: Java (Android)",
       "Framework/SDK: Android SDK with AndroidX, Gradle (Kotlin DSL)",
@@ -103,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <p class="text-gray-600 mb-4"><span class="font-semibold">Time:</span> ${p.period}</p>
       <p class="text-gray-700 font-semibold">Summary:</p>
       <p class="text-gray-600 mb-4">${p.summary}</p>
-      <p class="text-gray-700 font-semibold">Technologies & Techniques:</p>
+      <p class="text-gray-700 font-semibold">Technologies &amp; Techniques:</p>
       <ul class="text-gray-600 max-w-4xl mx-auto grid sm:grid-cols-2 gap-x-6 gap-y-2 text-left mt-2 mb-2">
         ${p.tech.map(t => `<li>• ${t}</li>`).join("")}
       </ul>

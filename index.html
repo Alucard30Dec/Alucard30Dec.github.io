@@ -37,11 +37,13 @@
       <div class="hidden md:flex items-center space-x-6">
         <a href="#about" class="text-gray-700 hover:text-black transition-colors">Profile</a>
         <a href="#skills" class="text-gray-700 hover:text-black transition-colors">Skills</a>
+        <a href="#achievements" class="text-gray-700 hover:text-black transition-colors">Achievements</a>
         <a href="#projects" class="text-gray-700 hover:text-black transition-colors">Projects</a>
         <a href="#contact" class="text-gray-700 hover:text-black transition-colors">Contact</a>
       </div>
 
       <div class="md:hidden">
+        <!-- (Có thể bổ sung JS cho menu mobile sau nếu muốn) -->
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
         </svg>
@@ -55,7 +57,7 @@
     <!-- Hero -->
     <section id="home" class="min-h-[60vh] flex items-center py-16">
       <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <!-- Avatar --> 
+        <!-- Avatar -->
         <div class="order-1 md:order-2 flex justify-center">
           <img
             src="Images/ProfileImage.png"
@@ -70,10 +72,16 @@
           <span class="text-lg font-medium text-gray-600">I am</span>
           <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mt-1 mb-4">Hoang Van Thien</h1>
           <h2 class="text-2xl font-medium text-gray-700">Software Engineering Student</h2>
+          <p class="mt-3 text-lg text-gray-600">
+            Backend &amp; Web Development Enthusiast · Competitive Programmer
+          </p>
 
-          <div class="mt-8 flex justify-center md:justify-start space-x-4">
+          <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
             <a href="#contact" class="btn btn-dark">Contact Me</a>
             <a href="CV_HOANGVANTHIEN.pdf" class="btn btn-light" target="_blank" rel="noopener noreferrer">View Resume</a>
+            <a href="https://alucard30dec.github.io/" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+              View Portfolio
+            </a>
           </div>
 
           <!-- Social -->
@@ -139,18 +147,38 @@
               </div>
               <div>
                 <h3 class="text-xl font-semibold">Education</h3>
-                <p class="text-gray-600">Ho Chi Minh City University of Economics and Finance - UEF</p>
+                <p class="text-gray-600">Ho Chi Minh City University of Economics and Finance (UEF)</p>
                 <p class="text-gray-600">B.S. in Software Engineering (GPA: 3.10/4)</p>
               </div>
             </div>
           </div>
 
           <p class="text-lg text-gray-700 leading-relaxed">
-            I'm a fourth-year Software Engineering student with a solid foundation in algorithms, data structures, and software development. As an active member of Competitive Programming, I have participated in national and university contests, including the Vietnam Student Informatics Olympiad.
+            I'm a fourth-year Software Engineering student at Ho Chi Minh City University of Economics and Finance (UEF)
+            with a solid foundation in algorithms, data structures, and web development. I actively join competitive
+            programming and have participated in national and university contests, including the Vietnam Student
+            Informatics Olympiad.
           </p>
           <p class="text-lg text-gray-700 leading-relaxed mt-4">
-            I am able to solve problems under pressure and am ready to apply my technical skills to real-life projects. I am currently looking for an internship where I can deliver clean code while gaining more experience.
+            I enjoy solving problems under pressure and turning ideas into maintainable software. I am currently looking
+            for a backend or web development internship where I can write clean, maintainable code and contribute to
+            real-world projects.
           </p>
+
+          <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+            <div class="bg-white p-4 rounded-xl card-border">
+              <p class="font-semibold text-gray-800 mb-1">Focus</p>
+              <p class="text-gray-600">
+                Backend &amp; web development (.NET, Java) and relational databases.
+              </p>
+            </div>
+            <div class="bg-white p-4 rounded-xl card-border">
+              <p class="font-semibold text-gray-800 mb-1">Strengths</p>
+              <p class="text-gray-600">
+                Algorithms, data structures, and competitive programming experience.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -164,7 +192,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-          <h3 class="text-2xl font-semibold mb-6 text-center">Programming & Frameworks</h3>
+          <h3 class="text-2xl font-semibold mb-6 text-center">Programming &amp; Frameworks</h3>
           <div class="grid grid-cols-2 gap-x-6 gap-y-4">
             <div class="flex items-center space-x-3">
               <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
@@ -194,7 +222,7 @@
         </div>
 
         <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-          <h3 class="text-2xl font-semibold mb-6 text-center">Database & Other Tools</h3>
+          <h3 class="text-2xl font-semibold mb-6 text-center">Database &amp; Other Tools</h3>
           <div class="grid grid-cols-2 gap-x-6 gap-y-4">
             <div class="flex items-center space-x-3">
               <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
@@ -210,7 +238,7 @@
             </div>
             <div class="flex items-center space-x-3">
               <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">Machine Learning (C++)</span>
+              <span class="text-lg">Data Structures &amp; Algorithms</span>
             </div>
             <div class="flex items-center space-x-3">
               <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
@@ -221,10 +249,51 @@
       </div>
     </section>
 
+    <!-- Achievements -->
+    <section id="achievements" class="py-24">
+      <div class="text-center mb-10">
+        <span class="text-sm font-medium text-gray-500">Competitive programming &amp; awards</span>
+        <h2 class="text-4xl font-bold mt-1">Achievements</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-8 rounded-2xl card-border">
+          <h3 class="text-2xl font-semibold mb-4">Competitions</h3>
+          <ul class="space-y-3 text-left text-gray-700">
+            <li>• 2nd Place – FIT Code Contest 2025, UEF</li>
+            <li>• 3rd Place – FIT Code Contest 2024, UEF</li>
+            <li>• 3rd Place – FIT Code Contest 2023, UEF</li>
+            <li>• Participant – Vietnam Student Informatics Olympiad</li>
+          </ul>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl card-border">
+          <h3 class="text-2xl font-semibold mb-4">Other Awards &amp; Activities</h3>
+          <ul class="space-y-3 text-left text-gray-700">
+            <li>• 3rd Place – UEF Math Olympiad 2023</li>
+            <li>• Active member of the university competitive programming club.</li>
+            <li>• Regular practice on Codeforces (HgThien) and LeetCode (alucard30dec).</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <a href="https://codeforces.com/profile/HgThien" class="btn btn-light text-sm" target="_blank" rel="noopener noreferrer">
+              View Codeforces
+            </a>
+            <a href="https://leetcode.com/alucard30dec" class="btn btn-light text-sm" target="_blank" rel="noopener noreferrer">
+              View LeetCode
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Projects -->
     <section id="projects" class="py-24">
       <div class="text-center mb-12">
+        <span class="text-sm font-medium text-gray-500">Things I've built</span>
         <h2 class="text-5xl font-extrabold tracking-tight mt-1">Projects</h2>
+        <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
+          A selection of academic and personal projects focused on backend, web development and mobile apps.
+        </p>
       </div>
 
       <!-- Khối bao bọc để đặt nút ra ngoài không đè lên card -->
@@ -255,7 +324,10 @@
 
     <!-- Contact -->
     <section id="contact" class="py-24 text-center">
-      <h2 class="text-5xl font-extrabold tracking-tight mt-1 mb-12">Contact</h2>
+      <h2 class="text-5xl font-extrabold tracking-tight mt-1 mb-6">Contact</h2>
+      <p class="text-gray-600 max-w-xl mx-auto mb-10">
+        I'm open to backend or web development internship opportunities. Feel free to reach out via email or phone.
+      </p>
 
       <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
         <!-- Gmail -->
@@ -284,11 +356,19 @@
       <div class="flex justify-center space-x-6 mb-6 md:hidden">
         <a href="#about" class="text-gray-700 hover:text-black transition-colors">Profile</a>
         <a href="#skills" class="text-gray-700 hover:text-black transition-colors">Skills</a>
+        <a href="#achievements" class="text-gray-700 hover:text-black transition-colors">Achievements</a>
         <a href="#projects" class="text-gray-700 hover:text-black transition-colors">Projects</a>
         <a href="#contact" class="text-gray-700 hover:text-black transition-colors">Contact</a>
       </div>
       <p class="text-gray-500 text-sm">
         Copyright © 2025 Hoang Van Thien. All Rights Reserved.
+      </p>
+      <p class="text-gray-400 text-xs mt-2">
+        Portfolio:
+        <a href="https://alucard30dec.github.io/" target="_blank" rel="noopener noreferrer"
+           class="underline hover:text-gray-600">
+          alucard30dec.github.io
+        </a>
       </p>
     </div>
   </footer>
