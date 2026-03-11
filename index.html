@@ -1,379 +1,409 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hoang Van Thien - Portfolio</title>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Inter font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-
-  <!-- Tailwind config (dùng font Inter) -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-        },
-      },
-    }
-  </script>
-
-  <!-- CSS tách riêng -->
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoang Van Thien | Backend-Focused Software Engineering Portfolio</title>
+  <meta
+    name="description"
+    content="Portfolio of Hoang Van Thien, a backend-focused software engineering student building reliable web applications with ASP.NET MVC, Java, SQL, and strong problem-solving skills."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="antialiased">
+<body>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="Go to home">
+        <span class="brand-mark">HVT</span>
+        <span class="brand-text">
+          <strong>Hoang Van Thien</strong>
+          <small>Backend-focused portfolio</small>
+        </span>
+      </a>
 
-  <!-- Header & Navigation -->
-  <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 shadow-sm border-b border-gray-200">
-    <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="#home" class="text-xl font-bold text-gray-900">Hoang Van Thien</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#about" class="nav-link" data-nav-link>About</a>
+        <a href="#skills" class="nav-link" data-nav-link>Skills</a>
+        <a href="#achievements" class="nav-link" data-nav-link>Achievements</a>
+        <a href="#projects" class="nav-link" data-nav-link>Projects</a>
+        <a href="#contact" class="nav-link" data-nav-link>Contact</a>
+      </nav>
 
-      <div class="hidden md:flex items-center space-x-6">
-        <a href="#about" class="text-gray-700 hover:text-black transition-colors">Profile</a>
-        <a href="#skills" class="text-gray-700 hover:text-black transition-colors">Skills</a>
-        <a href="#achievements" class="text-gray-700 hover:text-black transition-colors">Achievements</a>
-        <a href="#projects" class="text-gray-700 hover:text-black transition-colors">Projects</a>
-        <a href="#contact" class="text-gray-700 hover:text-black transition-colors">Contact</a>
+      <div class="header-actions">
+        <a href="CV_HOANGVANTHIEN.pdf" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+          Resume
+        </a>
+        <a href="#contact" class="button button-primary">Hire Me</a>
       </div>
 
-      <div class="md:hidden">
-        <!-- (Có thể bổ sung JS cho menu mobile sau nếu muốn) -->
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        data-nav-toggle
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu" data-mobile-menu>
+      <a href="#about" class="mobile-link" data-mobile-link>About</a>
+      <a href="#skills" class="mobile-link" data-mobile-link>Skills</a>
+      <a href="#achievements" class="mobile-link" data-mobile-link>Achievements</a>
+      <a href="#projects" class="mobile-link" data-mobile-link>Projects</a>
+      <a href="#contact" class="mobile-link" data-mobile-link>Contact</a>
+      <div class="mobile-actions">
+        <a href="CV_HOANGVANTHIEN.pdf" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+          View Resume
+        </a>
+        <a href="mailto:hoangvanthien301203@gmail.com" class="button button-primary">Email Me</a>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <!-- Main -->
-  <main class="max-w-6xl mx-auto px-6 pt-24 md:pt-32">
-
-    <!-- Hero -->
-    <section id="home" class="min-h-[60vh] flex items-center py-16">
-      <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <!-- Avatar -->
-        <div class="order-1 md:order-2 flex justify-center">
-          <img
-            src="Images/ProfileImage.png"
-            alt="Hoang Van Thien"
-            class="rounded-full shadow-xl w-60 h-60 md:w-80 md:h-80 object-cover border-4 border-white"
-            onerror="this.src='https://placehold.co/300x300/E0E0E0/333?text=HVT'; this.onerror=null;"
-          />
-        </div>
-
-        <!-- Title -->
-        <div class="order-2 md:order-1 text-center md:text-left">
-          <span class="text-lg font-medium text-gray-600">I am</span>
-          <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mt-1 mb-4">Hoang Van Thien</h1>
-          <h2 class="text-2xl font-medium text-gray-700">Software Engineering Student</h2>
-          <p class="mt-3 text-lg text-gray-600">
-            Backend &amp; Web Development Enthusiast · Competitive Programmer
+  <main>
+    <section id="home" class="hero section">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Hoang Van Thien / software engineering portfolio / open to internship and fresher roles</p>
+          <div class="hero-rule" aria-hidden="true"></div>
+          <h1 class="hero-title">
+            Backend systems with
+            <span class="hero-title-emphasis">discipline</span>
+            and interfaces with character.
+          </h1>
+          <p class="hero-summary">
+            I am Hoang Van Thien, a Software Engineering student at UEF with hands-on experience in ASP.NET MVC, Java,
+            SQL, and layered application design. I combine competitive programming discipline with practical project work
+            to ship maintainable, problem-solving software.
           </p>
 
-          <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
-            <a href="#contact" class="btn btn-dark">Contact Me</a>
-            <a href="CV_HOANGVANTHIEN.pdf" class="btn btn-light" target="_blank" rel="noopener noreferrer">View Resume</a>
-            <a href="https://alucard30dec.github.io/" class="btn btn-light" target="_blank" rel="noopener noreferrer">
-              View Portfolio
+          <div class="hero-toolline" aria-label="Core strengths">
+            <span>ASP.NET MVC</span>
+            <span>Java</span>
+            <span>SQL Server & MySQL</span>
+            <span>Data Structures & Algorithms</span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#projects" class="button button-primary">View Projects</a>
+            <a href="CV_HOANGVANTHIEN.pdf" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+              Open Resume
+            </a>
+            <a href="https://github.com/Alucard30Dec" target="_blank" rel="noopener noreferrer" class="button button-ghost">
+              GitHub
             </a>
           </div>
 
-          <!-- Social -->
-          <div class="mt-8 flex justify-center md:justify-start space-x-5">
-            <!-- GitHub -->
-            <a href="https://github.com/Alucard30Dec" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="GitHub">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.488.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.09.39-1.984 1.03-2.682-.103-.253-.446-1.27.098-2.646 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.819c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.376.202 2.393.1 2.646.64.698 1.03 1.592 1.03 2.682 0 3.842-2.338 4.685-4.566 4.935.359.309.678.92.678 1.853 0 1.338-.012 2.419-.012 2.747 0 .267.18.577.688.48C19.135 20.165 22 16.418 22 12 22 6.477 17.523 2 12 2z" clip-rule="evenodd"/>
-              </svg>
-            </a>
-
-            <!-- LinkedIn -->
-            <a href="https://www.linkedin.com/in/thi%C3%AAn-ho%C3%A0ng-9427732b5/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-            </a>
-
-            <!-- Codeforces -->
-            <a href="https://codeforces.com/profile/HgThien" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Codeforces">
-              <svg fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
-                <path d="M3 21h3v-8H3v8zm4 0h3V11H7v10zm4 0h3V3h-3v18zm4 0h3v-6h-3v6zm4 0h3V7h-3v14z"/>
-              </svg>
-            </a>
-
-            <!-- LeetCode -->
-            <a href="https://leetcode.com/alucard30dec" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LeetCode">
-              <svg fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
-                <path d="M12.92 11.64h2.71v-1.46h-2.71v1.46zm-4.32 0h2.7v-1.46h-2.7v1.46zm-4.31 0h2.7v-1.46H4.29v1.46zm14 3.6h-2.71v1.46h2.71v-1.46zm-4.32 0h-2.7v1.46h2.7v-1.46zm-4.31 0H8.6v1.46h2.7v-1.46zm-4.3 0H4.3v1.46h2.7v-1.46zm14-5.06h-2.71v1.46h2.71v-1.46zM20.9 2H3.1C2.5 2 2 2.5 2 3.1v17.8C2 21.5 2.5 22 3.1 22h17.8c.6 0 1.1-.5 1.1-1.1V3.1C22 2.5 21.5 2 20.9 2zM19.44 19.54H4.56V4.46h14.88v15.08z"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="py-24">
-      <div class="text-center mb-12">
-        <span class="text-sm font-medium text-gray-500">Here are some facts</span>
-        <h2 class="text-4xl font-bold mt-1">About Me</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-        <div class="flex justify-center">
-          <img
-            src="https://placehold.co/450x300/E0E0E0/333?text=Profile+Image"
-            alt="Profile Image"
-            class="rounded-2xl shadow-lg object-cover w-full h-auto"
-            onerror="this.src='https://placehold.co/450x300/E0E0E0/333?text=Profile+Image'; this.onerror=null;"
-          />
+          <dl class="hero-metrics">
+            <div class="metric-card">
+              <dt>Academic</dt>
+              <dd>3.10 / 4.00</dd>
+            </div>
+            <div class="metric-card">
+              <dt>Contest record</dt>
+              <dd>4 notable placements</dd>
+            </div>
+            <div class="metric-card">
+              <dt>Project set</dt>
+              <dd>3 shipped builds</dd>
+            </div>
+          </dl>
         </div>
 
-        <div>
-          <div class="bg-white p-8 rounded-2xl card-border mb-6">
-            <div class="flex items-center space-x-4">
-              <div class="bg-gray-100 p-3 rounded-full">
-                <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 21.052a11.952 11.952 0 01-6.824-4.001 12.083 12.083 0 01-.665-6.479L12 14z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7"></path>
-                </svg>
+        <div class="hero-visual reveal">
+          <div class="portrait-panel">
+            <div class="portrait-note">
+              <span class="portrait-note-label">Design intention</span>
+              <p>An editorial layout with sharper hierarchy, calmer rhythm, and enough restraint to let the work speak.</p>
+            </div>
+            <div class="portrait-frame">
+              <img
+                src="Images/ProfileImage.png"
+                alt="Portrait of Hoang Van Thien"
+                class="portrait-image"
+              >
+            </div>
+
+            <div class="hero-aside">
+              <div class="aside-block">
+                <span class="floating-label">Current focus</span>
+                <strong>Backend web development</strong>
+                <p>Clean architecture, APIs, and database-backed systems.</p>
               </div>
-              <div>
-                <h3 class="text-xl font-semibold">Education</h3>
-                <p class="text-gray-600">Ho Chi Minh City University of Economics and Finance (UEF)</p>
-                <p class="text-gray-600">B.S. in Software Engineering (GPA: 3.10/4)</p>
+              <div class="aside-block">
+                <span class="floating-label">Competitive edge</span>
+                <strong>Contest-tested problem solving</strong>
+                <p>FIT Code Contest awards and regular algorithm practice.</p>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <p class="text-lg text-gray-700 leading-relaxed">
-            I'm a fourth-year Software Engineering student at Ho Chi Minh City University of Economics and Finance (UEF)
-            with a solid foundation in algorithms, data structures, and web development. I actively join competitive
-            programming and have participated in national and university contests, including the Vietnam Student
-            Informatics Olympiad.
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">About</p>
+          <h2>Recruiter-ready profile, not just a student bio.</h2>
+          <p>
+            This portfolio is structured around what matters in hiring: technical foundation, evidence of execution,
+            and the ability to contribute reliably to real product work.
           </p>
-          <p class="text-lg text-gray-700 leading-relaxed mt-4">
-            I enjoy solving problems under pressure and turning ideas into maintainable software. I am currently looking
-            for a backend or web development internship where I can write clean, maintainable code and contribute to
-            real-world projects.
+        </div>
+
+        <div class="about-grid">
+          <article class="surface-card reveal">
+            <p class="card-kicker">Profile summary</p>
+            <h3>Solid backend fundamentals with strong learning velocity.</h3>
+            <p>
+              I am studying Software Engineering at Ho Chi Minh City University of Economics and Finance (UEF), with a
+              strong base in algorithms, object-oriented programming, relational databases, and web application design.
+            </p>
+            <p>
+              My projects focus on admin workflows, data management, authentication, and maintainable architecture. I am
+              looking for an environment where I can contribute to backend or full-stack delivery while continuing to
+              raise my engineering standards.
+            </p>
+          </article>
+
+          <div class="about-side">
+            <article class="surface-card reveal">
+              <p class="card-kicker">Education</p>
+              <h3>B.S. in Software Engineering</h3>
+              <ul class="detail-list">
+                <li>Ho Chi Minh City University of Economics and Finance (UEF)</li>
+                <li>Final-year student</li>
+                <li>GPA: 3.10 / 4.00</li>
+              </ul>
+            </article>
+
+            <article class="surface-card reveal">
+              <p class="card-kicker">What I bring</p>
+              <ul class="value-list">
+                <li>
+                  <strong>Structured implementation</strong>
+                  <span>Comfortable with layered architecture, CRUD systems, and business flow design.</span>
+                </li>
+                <li>
+                  <strong>Analytical problem solving</strong>
+                  <span>Competitive programming experience supports debugging speed and algorithmic thinking.</span>
+                </li>
+                <li>
+                  <strong>Team-ready mindset</strong>
+                  <span>Focused on readable code, consistency, and shipping features that are easy to maintain.</span>
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Skills</p>
+          <h2>Balanced for backend delivery, database work, and real implementation detail.</h2>
+          <p>
+            The stack below reflects what I can use confidently in coursework and portfolio projects today.
           </p>
+        </div>
 
-          <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
-            <div class="bg-white p-4 rounded-xl card-border">
-              <p class="font-semibold text-gray-800 mb-1">Focus</p>
-              <p class="text-gray-600">
-                Backend &amp; web development (.NET, Java) and relational databases.
-              </p>
+        <div class="skills-grid">
+          <article class="surface-card skill-card reveal">
+            <p class="card-kicker">Languages & frameworks</p>
+            <h3>Application development</h3>
+            <div class="tag-list">
+              <span class="tag">C#</span>
+              <span class="tag">Java</span>
+              <span class="tag">C</span>
+              <span class="tag">ASP.NET MVC</span>
+              <span class="tag">Web API</span>
+              <span class="tag">Java Servlet</span>
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
             </div>
-            <div class="bg-white p-4 rounded-xl card-border">
-              <p class="font-semibold text-gray-800 mb-1">Strengths</p>
-              <p class="text-gray-600">
-                Algorithms, data structures, and competitive programming experience.
-              </p>
+          </article>
+
+          <article class="surface-card skill-card reveal">
+            <p class="card-kicker">Data & tooling</p>
+            <h3>Persistence and workflow</h3>
+            <div class="tag-list">
+              <span class="tag">SQL Server</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">Entity Framework</span>
+              <span class="tag">SQLite</span>
+              <span class="tag">Git</span>
+              <span class="tag">Visual Studio</span>
+              <span class="tag">Android Studio</span>
+              <span class="tag">Gradle</span>
             </div>
-          </div>
+          </article>
+
+          <article class="surface-card skill-card reveal">
+            <p class="card-kicker">Engineering strengths</p>
+            <h3>How I approach implementation</h3>
+            <ul class="detail-list">
+              <li>Data structures and algorithms</li>
+              <li>Layered architecture and MVC pattern</li>
+              <li>Authentication and role-based authorization</li>
+              <li>CRUD workflows and relational data modeling</li>
+              <li>Competitive programming discipline</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Skills -->
-    <section id="skills" class="py-24 bg-white rounded-3xl my-16 card-border">
-      <div class="text-center mb-12">
-        <span class="text-sm font-medium text-gray-500">Here's what I can do</span>
-        <h2 class="text-4xl font-bold mt-1">Skills</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-          <h3 class="text-2xl font-semibold mb-6 text-center">Programming &amp; Frameworks</h3>
-          <div class="grid grid-cols-2 gap-x-6 gap-y-4">
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">Java</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">C</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">C#</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">ASP.NET MVC</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">Web API</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">Java Servlet</span>
-            </div>
-          </div>
+    <section id="achievements" class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Achievements</p>
+          <h2>Proof of consistency, not just participation.</h2>
+          <p>
+            These highlights show repeatable performance in contests and a sustained interest in solving hard problems.
+          </p>
         </div>
 
-        <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-          <h3 class="text-2xl font-semibold mb-6 text-center">Database &amp; Other Tools</h3>
-          <div class="grid grid-cols-2 gap-x-6 gap-y-4">
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">MS SQL Server</span>
+        <div class="achievement-grid">
+          <article class="surface-card reveal">
+            <p class="card-kicker">Competition results</p>
+            <h3>Programming and academic achievements</h3>
+            <ol class="timeline">
+              <li>
+                <strong>2nd Place</strong>
+                <span>FIT Code Contest 2025, UEF</span>
+              </li>
+              <li>
+                <strong>3rd Place</strong>
+                <span>FIT Code Contest 2024, UEF</span>
+              </li>
+              <li>
+                <strong>3rd Place</strong>
+                <span>FIT Code Contest 2023, UEF</span>
+              </li>
+              <li>
+                <strong>Participant</strong>
+                <span>Vietnam Student Informatics Olympiad</span>
+              </li>
+              <li>
+                <strong>3rd Place</strong>
+                <span>UEF Math Olympiad 2023</span>
+              </li>
+            </ol>
+          </article>
+
+          <article class="surface-card reveal">
+            <p class="card-kicker">Coding presence</p>
+            <h3>Ongoing practice outside the classroom</h3>
+            <p class="achievement-copy">
+              I regularly practice algorithmic problem solving and stay active in the university competitive programming
+              community. That habit translates directly into debugging speed, cleaner logic, and better implementation
+              under time pressure.
+            </p>
+            <div class="profile-links">
+              <a href="https://codeforces.com/profile/HgThien" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+                Codeforces
+              </a>
+              <a href="https://leetcode.com/alucard30dec" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+                LeetCode
+              </a>
+              <a href="https://www.linkedin.com/in/thi%C3%AAn-ho%C3%A0ng-9427732b5/" target="_blank" rel="noopener noreferrer" class="button button-ghost">
+                LinkedIn
+              </a>
             </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">MySQL</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">Git</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">Data Structures &amp; Algorithms</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span class="text-lg">MVC Pattern</span>
-            </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Achievements -->
-    <section id="achievements" class="py-24">
-      <div class="text-center mb-10">
-        <span class="text-sm font-medium text-gray-500">Competitive programming &amp; awards</span>
-        <h2 class="text-4xl font-bold mt-1">Achievements</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-white p-8 rounded-2xl card-border">
-          <h3 class="text-2xl font-semibold mb-4">Competitions</h3>
-          <ul class="space-y-3 text-left text-gray-700">
-            <li>• 2nd Place – FIT Code Contest 2025, UEF</li>
-            <li>• 3rd Place – FIT Code Contest 2024, UEF</li>
-            <li>• 3rd Place – FIT Code Contest 2023, UEF</li>
-            <li>• Participant – Vietnam Student Informatics Olympiad</li>
-          </ul>
+    <section id="projects" class="section project-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Projects</p>
+          <h2>Selected builds that show architecture, data handling, and interface discipline.</h2>
+          <p>
+            Use the controls to browse featured work. Each project includes a short engineering breakdown below.
+          </p>
         </div>
 
-        <div class="bg-white p-8 rounded-2xl card-border">
-          <h3 class="text-2xl font-semibold mb-4">Other Awards &amp; Activities</h3>
-          <ul class="space-y-3 text-left text-gray-700">
-            <li>• 3rd Place – UEF Math Olympiad 2023</li>
-            <li>• Active member of the university competitive programming club.</li>
-            <li>• Regular practice on Codeforces (HgThien) and LeetCode (alucard30dec).</li>
-          </ul>
-          <div class="mt-4 flex flex-wrap gap-3">
-            <a href="https://codeforces.com/profile/HgThien" class="btn btn-light text-sm" target="_blank" rel="noopener noreferrer">
-              View Codeforces
+        <div class="projects-shell reveal">
+          <button id="projPrev" class="nav-arrow nav-arrow-left" type="button" aria-label="Previous project">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+            </svg>
+          </button>
+
+          <div class="carousel-viewport">
+            <div id="projTrack" class="project-track" aria-live="polite"></div>
+          </div>
+
+          <button id="projNext" class="nav-arrow nav-arrow-right" type="button" aria-label="Next project">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <article id="projDetail" class="project-detail surface-card reveal"></article>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="contact-panel reveal">
+          <div class="contact-copy">
+            <p class="section-kicker section-kicker-dark">Contact</p>
+            <h2>If you need a backend intern who can think clearly and build carefully, let's talk.</h2>
+            <p>
+              I am available for internship and entry-level opportunities in backend or web development, and I am ready
+              to contribute to production-minded work with discipline and curiosity.
+            </p>
+            <div class="contact-stamp">Based in Vietnam / open to internship and fresher opportunities</div>
+          </div>
+
+          <div class="contact-grid">
+            <a class="contact-link" href="mailto:hoangvanthien301203@gmail.com">
+              <span>Email</span>
+              <strong>hoangvanthien301203@gmail.com</strong>
             </a>
-            <a href="https://leetcode.com/alucard30dec" class="btn btn-light text-sm" target="_blank" rel="noopener noreferrer">
-              View LeetCode
+            <a class="contact-link" href="tel:+84379135123">
+              <span>Phone</span>
+              <strong>+84 379 135 123</strong>
+            </a>
+            <a class="contact-link" href="https://github.com/Alucard30Dec" target="_blank" rel="noopener noreferrer">
+              <span>GitHub</span>
+              <strong>github.com/Alucard30Dec</strong>
+            </a>
+            <a class="contact-link" href="https://www.linkedin.com/in/thi%C3%AAn-ho%C3%A0ng-9427732b5/" target="_blank" rel="noopener noreferrer">
+              <span>LinkedIn</span>
+              <strong>View professional profile</strong>
             </a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" class="py-24">
-      <div class="text-center mb-12">
-        <span class="text-sm font-medium text-gray-500">Things I've built</span>
-        <h2 class="text-5xl font-extrabold tracking-tight mt-1">Projects</h2>
-        <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
-          A selection of academic and personal projects focused on backend, web development and mobile apps.
-        </p>
-      </div>
-
-      <!-- Khối bao bọc để đặt nút ra ngoài không đè lên card -->
-      <div class="relative max-w-6xl mx-auto carousel-3d overflow-visible">
-        <!-- Prev (đặt lệch ra 2 bên bằng lớp -left-*) -->
-        <button id="projPrev"
-          class="nav-arrow absolute -left-8 md:-left-16 top-1/2 -translate-y-1/2"
-          aria-label="Previous project">
-          <svg viewBox="0 0 24 24" class="w-7 h-7"><path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-        </button>
-
-        <!-- Next -->
-        <button id="projNext"
-          class="nav-arrow absolute -right-8 md:-right-16 top-1/2 -translate-y-1/2"
-          aria-label="Next project">
-          <svg viewBox="0 0 24 24" class="w-7 h-7"><path fill="currentColor" d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
-        </button>
-
-        <div id="projTrack" class="flex items-stretch justify-center gap-2 px-2 md:px-4 will-change-transform will-change-opacity">
-          <!-- Render bởi JS -->
-        </div>
-      </div>
-
-      <div id="projDetail" class="max-w-6xl mx-auto mt-10 bg-white rounded-3xl border border-gray-200 shadow-sm p-8 md:p-12 text-center transition-all duration-300">
-        <!-- Render bởi JS -->
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="py-24 text-center">
-      <h2 class="text-5xl font-extrabold tracking-tight mt-1 mb-6">Contact</h2>
-      <p class="text-gray-600 max-w-xl mx-auto mb-10">
-        I'm open to backend or web development internship opportunities. Feel free to reach out via email or phone.
-      </p>
-
-      <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-        <!-- Gmail -->
-        <a
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=hoangvanthien301203@gmail.com"
-          target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center justify-center space-x-3 bg-white text-gray-800 font-medium px-8 py-4 rounded-full card-border btn-pill text-lg w-full sm:w-auto"
-        >
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"></path></svg>
-          <span>hoangvanthien301203@gmail.com</span>
-        </a>
-
-        <!-- Phone -->
-        <a href="tel:+84379135123"
-           class="inline-flex items-center justify-center space-x-3 bg-white text-gray-800 font-medium px-8 py-4 rounded-full card-border btn-pill text-lg w-full sm:w-auto">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg>
-          <span>+84 379 135 123</span>
-        </a>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-gray-200 mt-16">
-    <div class="max-w-6xl mx-auto px-6 py-12 text-center">
-      <div class="flex justify-center space-x-6 mb-6 md:hidden">
-        <a href="#about" class="text-gray-700 hover:text-black transition-colors">Profile</a>
-        <a href="#skills" class="text-gray-700 hover:text-black transition-colors">Skills</a>
-        <a href="#achievements" class="text-gray-700 hover:text-black transition-colors">Achievements</a>
-        <a href="#projects" class="text-gray-700 hover:text-black transition-colors">Projects</a>
-        <a href="#contact" class="text-gray-700 hover:text-black transition-colors">Contact</a>
-      </div>
-      <p class="text-gray-500 text-sm">
-        Copyright © 2025 Hoang Van Thien. All Rights Reserved.
-      </p>
-      <p class="text-gray-400 text-xs mt-2">
-        Portfolio:
-        <a href="https://alucard30dec.github.io/" target="_blank" rel="noopener noreferrer"
-           class="underline hover:text-gray-600">
-          alucard30dec.github.io
-        </a>
-      </p>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>Copyright <span id="currentYear"></span> Hoang Van Thien. All rights reserved.</p>
+      <a href="#top" class="footer-link">Back to top</a>
     </div>
   </footer>
 
-  <!-- JS tách riêng -->
   <script src="script.js" defer></script>
 </body>
 </html>
