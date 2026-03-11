@@ -1,370 +1,188 @@
+// ====== DATA (projects) ======
 const projects = [
   {
-    title: "Private Clinic Management System",
-    category: "Role-based web application",
-    period: "Sep 2025 - Oct 2025",
-    image: "Images/PrivateClinicManagementSystem.jpg",
-    github: "https://github.com/Alucard30Dec/Private-Clinic",
-    demo: null,
+    title: "Hotel Management System",
+    image: "Images/HotelManagementSystem.jpg",
+    github: "#",
+    demo: "#",
+    period: "02/2025 – 04/2025",
     summary:
-      "A clinic management platform for handling doctors, receptionists, appointments, and patient records with role-based access and maintainable business flows.",
-    highlights: [
-      "Implemented authentication and role-based authorization across admin and staff workflows.",
-      "Organized the system with a 3-layer architecture to keep UI, business logic, and data access separated.",
-      "Covered core management scenarios including scheduling, records handling, and CRUD-based operations."
+      "A web-based hotel management system that helps staff manage rooms, bookings, customers, and basic reports. Focused on clean separation between UI, business logic and data access.",
+    tech: [
+      "Programming Language: C#, HTML, CSS",
+      "Framework: ASP.NET MVC, Entity Framework",
+      "Database: Microsoft SQL Server / T-SQL",
+      "Architecture: 3-layer architecture (UI / Business Logic / Data Access)",
+      "Features: Room & booking management, customer records, basic reporting",
+      "Tools: Git, Visual Studio, SQL scripts",
     ],
-    stack: ["C#", "ASP.NET MVC", "Entity Framework", "SQL Server", "HTML", "CSS"]
   },
   {
-    title: "Hotel Management System",
-    category: "Management information system",
-    period: "Feb 2025 - Apr 2025",
-    image: "Images/HotelManagementSystem.jpg",
-    github: null,
-    demo: null,
+    title: "Private Clinic Management System",
+    image: "Images/PrivateClinicManagementSystem.jpg",
+    github: "https://github.com/Alucard30Dec/Private-Clinic",
+    demo: "#",
+    period: "09/2025 – 10/2025",
     summary:
-      "A web-based management system for rooms, bookings, customers, and reporting, designed to support operational hotel workflows and structured data handling.",
-    highlights: [
-      "Built booking and room management flows around relational data and admin operations.",
-      "Focused on clean separation between interface, business rules, and persistence logic.",
-      "Delivered a practical dashboard-style experience for staff-facing usage."
+      "A clinic management system designed to manage doctors, receptionists, and patients efficiently. Supports appointment scheduling, patient records, and staff management with role-based authentication and a layered architecture for scalability and maintainability.",
+    tech: [
+      "Programming Language: C#, HTML, CSS",
+      "Framework: ASP.NET MVC, Entity Framework",
+      "Database: Microsoft SQL Server / T-SQL",
+      "Architecture: 3-layer architecture (UI / Business Logic / Data Access)",
+      "Features: Admin module, authentication, role-based authorization, CRUD operations",
+      "Tools: Git, Visual Studio, SQL scripts",
     ],
-    stack: ["C#", "ASP.NET MVC", "Entity Framework", "SQL Server", "HTML", "CSS"]
   },
   {
     title: "Personal Expense Tracker",
-    category: "Android application",
-    period: "Oct 2025 - Nov 2025",
     image: "Images/PersonalExpenseTracker.png",
     github: "https://github.com/Alucard30Dec/Personal-Expense-Tracker",
-    demo: null,
+    demo: "#",
+    period: "10/2025 – 11/2025",
     summary:
-      "A lightweight Android app for tracking expenses, organizing categories, and viewing spending insights through a simple, fast personal finance workflow.",
-    highlights: [
-      "Stored user expense records locally with SQLite for reliable on-device persistence.",
-      "Implemented CRUD operations for entries and category management.",
-      "Added a statistics view to make monthly spending patterns easier to understand."
+      "A lightweight Android app for recording and analyzing personal spending. Allows users to add expenses with basic details and categories, and provides a statistics screen for quick insights into monthly totals and trends.",
+    tech: [
+      "Programming Language: Java (Android)",
+      "Framework/SDK: Android SDK with AndroidX, Gradle (Kotlin DSL)",
+      "Database: SQLite for on-device persistence",
+      "Architecture: Layered approach separating UI and data access",
+      "Features: CRUD operations for expenses, category management, statistics module",
+      "Tools: Git, Android Studio, Gradle build scripts",
     ],
-    stack: ["Java", "Android SDK", "AndroidX", "SQLite", "Gradle"]
-  }
+  },
 ];
 
-function projectLink(label, href, variant) {
-  if (!href) {
-    return `<span class="button ${variant} is-disabled" aria-disabled="true">${label}</span>`;
-  }
-
-  return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="button ${variant}">${label}</a>`;
-}
-
+// ====== Helpers to build & render ======
 function buildCard(project, roleClass, index) {
-  const cardIndex = String(index + 1).padStart(2, "0");
-  const projectStatus = project.github ? "Source available" : "Private / offline";
-
+  if (!project) return "";
   return `
-    <article class="card3d ${roleClass}" data-index="${index}">
-      <div class="project-card-body">
-        <div class="project-card-head">
-          <span class="project-card-index">${cardIndex}</span>
-          <span>${project.category}</span>
+    <article class="card3d card3d--frame ${roleClass}" data-index="${index}">
+      <div class="p-6 text-center">
+        <div class="card-media">
+          <img src="${project.image}" alt="${project.title}"
+               onerror="this.src='https://placehold.co/600x600/cccccc/999?text=Image+Not+Found'; this.onerror=null;">
         </div>
-        <div class="project-card-media">
-          <img
-            src="${project.image}"
-            alt="${project.title}"
-            loading="lazy"
-          >
-        </div>
-        <div class="project-card-meta">
-          <span>${project.period}</span>
-          <span>${projectStatus}</span>
-        </div>
-        <h3 class="project-card-title">${project.title}</h3>
-        <p class="project-card-summary">${project.summary}</p>
-        <div class="project-card-actions">
-          ${projectLink("Source", project.github, "button-secondary")}
-          ${projectLink("Live Demo", project.demo, "button-ghost")}
+
+        <h3 class="project-title">${project.title}</h3>
+
+        <div class="project-buttons">
+          <a href="${project.github}" target="_blank" rel="noopener" class="btn-pill btn-dark-solid">Github</a>
+          <a href="${project.demo}" target="_blank" rel="noopener" class="btn-pill btn-light-outline">Demo</a>
         </div>
       </div>
     </article>
   `;
 }
 
-function smoothScrollToSection(sectionId) {
-  const target = document.querySelector(sectionId);
-  if (!target) {
-    return;
-  }
-
-  const headerOffset = 96;
-  const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
-  window.scrollTo({ top, behavior: "smooth" });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  const header = document.querySelector(".site-header");
-  const navToggle = document.querySelector("[data-nav-toggle]");
-  const mobileMenu = document.querySelector("[data-mobile-menu]");
-  const mobileLinks = document.querySelectorAll("[data-mobile-link]");
-  const navLinks = Array.from(document.querySelectorAll("[data-nav-link]"));
-  const revealItems = document.querySelectorAll(".reveal");
-  const yearNode = document.getElementById("currentYear");
-
   const track = document.getElementById("projTrack");
   const detail = document.getElementById("projDetail");
   const btnPrev = document.getElementById("projPrev");
   const btnNext = document.getElementById("projNext");
-
-  let activeProject = 0;
-  let isAnimating = false;
-
-  function setHeaderState() {
-    if (!header) {
-      return;
-    }
-
-    header.classList.toggle("scrolled", window.scrollY > 12);
-  }
-
-  function closeMobileMenu() {
-    if (!navToggle || !mobileMenu) {
-      return;
-    }
-
-    navToggle.setAttribute("aria-expanded", "false");
-    mobileMenu.classList.remove("is-open");
-    document.body.classList.remove("menu-open");
-  }
-
-  function toggleMobileMenu() {
-    if (!navToggle || !mobileMenu) {
-      return;
-    }
-
-    const isOpen = navToggle.getAttribute("aria-expanded") === "true";
-    navToggle.setAttribute("aria-expanded", String(!isOpen));
-    mobileMenu.classList.toggle("is-open", !isOpen);
-    document.body.classList.toggle("menu-open", !isOpen);
-  }
-
-  function setActiveNavLink() {
-    const sections = document.querySelectorAll("main section[id]");
-    const scrollPosition = window.scrollY + 120;
-
-    let currentId = "#home";
-    sections.forEach((section) => {
-      if (scrollPosition >= section.offsetTop) {
-        currentId = `#${section.id}`;
-      }
-    });
-
-    navLinks.forEach((link) => {
-      link.classList.toggle("active", link.getAttribute("href") === currentId);
-    });
-  }
-
-  function setupRevealAnimation() {
-    if (!("IntersectionObserver" in window)) {
-      revealItems.forEach((item) => item.classList.add("is-visible"));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries, currentObserver) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          entry.target.classList.add("is-visible");
-          currentObserver.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.18 }
-    );
-
-    revealItems.forEach((item) => observer.observe(item));
-  }
+  let active = 1;
+  let animating = false;
 
   function renderCards() {
-    if (!track) {
-      return;
-    }
-
-    const previousIndex = (activeProject - 1 + projects.length) % projects.length;
-    const nextIndex = (activeProject + 1) % projects.length;
+    const prevIndex = (active - 1 + projects.length) % projects.length;
+    const nextIndex = (active + 1) % projects.length;
 
     track.innerHTML = `
-      ${buildCard(projects[previousIndex], "card3d--left", previousIndex)}
-      ${buildCard(projects[activeProject], "card3d--active", activeProject)}
-      ${buildCard(projects[nextIndex], "card3d--right", nextIndex)}
+      ${buildCard(projects[prevIndex], 'card3d--left', prevIndex)}
+      ${buildCard(projects[active], 'card3d--active', active)}
+      ${buildCard(projects[nextIndex], 'card3d--right', nextIndex)}
     `;
 
-    Array.from(track.children).forEach((card) => {
-      const index = Number(card.getAttribute("data-index"));
-      if (Number.isNaN(index)) {
-        return;
-      }
-
-      card.addEventListener("click", () => setActiveProject(index));
-      card.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", (event) => event.stopPropagation());
-      });
+    // Allow click to focus a side card
+    Array.from(track.children).forEach((el) => {
+      const index = parseInt(el.dataset.index, 10);
+      if (!isNaN(index)) el.onclick = () => setActive(index);
     });
   }
 
   function renderDetail() {
-    if (!detail) {
-      return;
-    }
-
-    const project = projects[activeProject];
-    const techMarkup = project.stack.map((item) => `<li>${item}</li>`).join("");
-    const highlightMarkup = project.highlights.map((item) => `<li>${item}</li>`).join("");
-
+    const p = projects[active];
+    detail.style.opacity = 0;
+    detail.style.transform = "translateY(20px)";
     detail.innerHTML = `
-      <div class="project-detail-head">
-        <div>
-          <p class="card-kicker">${project.category}</p>
-          <h3>${project.title}</h3>
-          <div class="project-detail-meta">
-            <span class="project-meta-pill">${project.period}</span>
-            <span class="project-meta-pill">${project.stack.length} key technologies</span>
-          </div>
-        </div>
-        <div class="detail-actions">
-          ${projectLink("View Source", project.github, "button-secondary")}
-          ${projectLink("Live Demo", project.demo, "button-ghost")}
-        </div>
-      </div>
-      <p class="project-detail-copy">${project.summary}</p>
-      <div class="project-detail-grid">
-        <section class="project-panel">
-          <h4>Implementation highlights</h4>
-          <ul class="project-list">${highlightMarkup}</ul>
-        </section>
-        <section class="project-panel">
-          <h4>Stack and tools</h4>
-          <ul class="project-list">${techMarkup}</ul>
-        </section>
-      </div>
+      <h3 class="text-3xl md:text-4xl font-bold mb-3">${p.title}</h3>
+      ${p.score ? `<p class="text-gray-600 mb-1"><span class="font-semibold">Score:</span> ${p.score}</p>` : ""}
+      <p class="text-gray-600 mb-4"><span class="font-semibold">Time:</span> ${p.period}</p>
+      <p class="text-gray-700 font-semibold">Summary:</p>
+      <p class="text-gray-600 mb-4">${p.summary}</p>
+      <p class="text-gray-700 font-semibold">Technologies &amp; Techniques:</p>
+      <ul class="text-gray-600 max-w-4xl mx-auto grid sm:grid-cols-2 gap-x-6 gap-y-2 text-left mt-2 mb-2">
+        ${p.tech.map(t => `<li>• ${t}</li>`).join("")}
+      </ul>
     `;
+    setTimeout(() => {
+      detail.style.opacity = 1;
+      detail.style.transform = "translateY(0)";
+    }, 80);
   }
 
-  function setTrackAnimationState(opacity, translateY) {
-    if (!track) {
-      return;
-    }
+  // Hiệu ứng mượt khi chuyển (fade + slide nhẹ) cho track
+  function animateAndRender(nextIndex) {
+    if (animating) return;
+    animating = true;
 
-    track.style.opacity = String(opacity);
-    track.style.transform = `translateY(${translateY}px)`;
-  }
+    // Fade out nhẹ
+    track.style.opacity = 0;
+    track.style.transform = "translateY(8px)";
 
-  function setActiveProject(index) {
-    if (!track || isAnimating || projects.length === 0) {
-      return;
-    }
-
-    isAnimating = true;
-    setTrackAnimationState(0, 14);
-
-    window.setTimeout(() => {
-      activeProject = (index + projects.length) % projects.length;
+    // Đợi ngắn rồi cập nhật DOM, sau đó fade in
+    setTimeout(() => {
+      active = (nextIndex + projects.length) % projects.length;
       renderCards();
       renderDetail();
 
-      window.requestAnimationFrame(() => {
-        setTrackAnimationState(1, 0);
-        window.setTimeout(() => {
-          isAnimating = false;
-        }, 220);
+      requestAnimationFrame(() => {
+        track.style.opacity = 1;
+        track.style.transform = "translateY(0)";
+        setTimeout(() => { animating = false; }, 200);
       });
-    }, 150);
+    }, 140);
   }
 
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", (event) => {
-      const sectionId = anchor.getAttribute("href");
-      if (!sectionId || sectionId === "#") {
-        return;
-      }
+  function setActive(i) { animateAndRender(i); }
 
-      const target = document.querySelector(sectionId);
-      if (!target) {
-        return;
-      }
+  // Buttons
+  if (btnPrev) btnPrev.addEventListener("click", () => animateAndRender(active - 1));
+  if (btnNext) btnNext.addEventListener("click", () => animateAndRender(active + 1));
 
-      event.preventDefault();
-      smoothScrollToSection(sectionId);
+  // Initial render
+  renderCards();
+  renderDetail();
 
-      if (anchor.hasAttribute("data-mobile-link")) {
-        closeMobileMenu();
-      }
+  // ===== Smooth Scrolling for internal anchors =====
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", (e) => {
+      const targetId = anchor.getAttribute("href");
+      if (!targetId || targetId === "#") return;
+      const targetElement = document.querySelector(targetId);
+      if (!targetElement) return;
+
+      e.preventDefault();
+      const headerOffset = 80;
+      const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+      const targetPosition = elementPosition - headerOffset;
+      smoothScrollTo(targetPosition, 900);
     });
   });
 
-  if (navToggle) {
-    navToggle.addEventListener("click", toggleMobileMenu);
+  function smoothScrollTo(targetPosition, duration) {
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const t = Math.min(timeElapsed / duration, 1);
+      const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      window.scrollTo(0, startPosition + distance * ease);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+    requestAnimationFrame(animation);
   }
-
-  document.addEventListener("click", (event) => {
-    if (!mobileMenu || !navToggle) {
-      return;
-    }
-
-    const clickTarget = event.target;
-    if (!(clickTarget instanceof Node)) {
-      return;
-    }
-
-    const clickedInsideMenu = mobileMenu.contains(clickTarget);
-    const clickedToggle = navToggle.contains(clickTarget);
-    if (!clickedInsideMenu && !clickedToggle) {
-      closeMobileMenu();
-    }
-  });
-
-  mobileLinks.forEach((link) => {
-    link.addEventListener("click", closeMobileMenu);
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeMobileMenu();
-      return;
-    }
-
-    if (event.key === "ArrowLeft") {
-      setActiveProject(activeProject - 1);
-    }
-
-    if (event.key === "ArrowRight") {
-      setActiveProject(activeProject + 1);
-    }
-  });
-
-  if (btnPrev) {
-    btnPrev.addEventListener("click", () => setActiveProject(activeProject - 1));
-  }
-
-  if (btnNext) {
-    btnNext.addEventListener("click", () => setActiveProject(activeProject + 1));
-  }
-
-  if (yearNode) {
-    yearNode.textContent = String(new Date().getFullYear());
-  }
-
-  renderCards();
-  renderDetail();
-  setupRevealAnimation();
-  setHeaderState();
-  setActiveNavLink();
-
-  window.addEventListener("scroll", () => {
-    setHeaderState();
-    setActiveNavLink();
-  });
-
-  window.addEventListener("resize", closeMobileMenu);
 });
