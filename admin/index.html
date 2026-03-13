@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "sans-serif"] }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <div class="admin-header__inner">
+      <div>
+        <p class="admin-kicker">Portfolio CMS</p>
+        <h1 class="admin-title">/admin</h1>
+        <p class="admin-subtitle">
+          Chinh sua toan bo noi dung portfolio. Du lieu duoc luu trong trinh duyet nay bang localStorage.
+        </p>
+      </div>
+
+      <div class="admin-toolbar">
+        <a href="../index.html" class="admin-button admin-button--ghost">Mo portfolio</a>
+        <button id="saveBtn" class="admin-button admin-button--primary" type="button">Luu thay doi</button>
+        <button id="resetBtn" class="admin-button admin-button--ghost" type="button">Khoi phuc mac dinh</button>
+        <button id="exportBtn" class="admin-button admin-button--ghost" type="button">Export JSON</button>
+        <button id="importBtn" class="admin-button admin-button--ghost" type="button">Import JSON</button>
+        <input id="importFile" type="file" accept="application/json" hidden />
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <aside class="admin-sidebar">
+      <div class="admin-panel">
+        <h2 class="admin-panel__title">Ghi chu</h2>
+        <ul class="admin-notes">
+          <li>Thay doi chi co tren trinh duyet va thiet bi hien tai.</li>
+          <li>Dung Export JSON de sao luu va Import JSON de khoi phuc tren may khac.</li>
+          <li>Nhap duong dan anh tuong doi nhu <code>Images/ProfileImage.png</code> hoac URL day du.</li>
+          <li>Moi dong trong textarea danh sach se tao ra 1 item.</li>
+        </ul>
+      </div>
+
+      <div class="admin-panel">
+        <h2 class="admin-panel__title">Trang thai</h2>
+        <p id="statusMessage" class="admin-status">San sang.</p>
+      </div>
+    </aside>
+
+    <section class="admin-content">
+      <div id="editorRoot" class="admin-editor"></div>
+    </section>
+  </main>
+
+  <script src="../portfolio-data.js" defer></script>
+  <script src="admin.js" defer></script>
+</body>
+</html>

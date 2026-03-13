@@ -1,0 +1,32 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: osms-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD:-StrongPassw0rd!2026}
+    ports:
+      - "${DB_PORT:-14333}:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: osms-web
+    depends_on:
+      - sqlserver
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Server=sqlserver,1433;Database=OnlineSalesManagementSystemDb;User Id=sa;Password=${DB_PASSWORD:-StrongPassw0rd!2026};TrustServerCertificate=True;Encrypt=False;
+      Startup__DbInitMaxRetries: 20
+      Startup__DbInitDelaySeconds: 6
+      Seed__ResetDemoData: "false"
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    restart: unless-stopped
+
+volumes:
+  sqlserver-data:
