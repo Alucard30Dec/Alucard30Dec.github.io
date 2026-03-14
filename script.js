@@ -68,8 +68,19 @@ function renderHeroSocials(links) {
   }).join("");
 }
 
+function setTextAndToggleVisibility(id, value) {
+  var element = document.getElementById(id);
+  if (!element) {
+    return;
+  }
+
+  var text = String(value || "").trim();
+  element.textContent = text;
+  element.style.display = text ? "" : "none";
+}
+
 function renderAbout(data) {
-  document.getElementById("aboutKicker").textContent = data.kicker;
+  setTextAndToggleVisibility("aboutKicker", data.kicker);
   document.getElementById("aboutTitle").textContent = data.title;
 
   var image = document.getElementById("aboutImage");
@@ -91,7 +102,7 @@ function renderAbout(data) {
 }
 
 function renderSkills(data) {
-  document.getElementById("skillsKicker").textContent = data.kicker;
+  setTextAndToggleVisibility("skillsKicker", data.kicker);
   document.getElementById("skillsTitle").textContent = data.title;
 
   document.getElementById("skillsGroups").innerHTML = data.groups.map(function (group) {
@@ -108,15 +119,22 @@ function renderSkills(data) {
 }
 
 function renderAchievements(data) {
-  document.getElementById("achievementsKicker").textContent = data.kicker;
+  setTextAndToggleVisibility("achievementsKicker", data.kicker);
   document.getElementById("achievementsTitle").textContent = data.title;
 
   document.getElementById("achievementGroups").innerHTML = data.groups.map(function (group) {
-    var links = group.links.length ? '<div class="mt-4 flex flex-wrap gap-3">' + group.links.map(function (link) {
+    var inlineLinks = group.items.length > 0 && group.items.length === group.links.length;
+    var links = !inlineLinks && group.links.length ? '<div class="mt-4 flex flex-wrap gap-3">' + group.links.map(function (link) {
       return '<a href="' + escapeHtml(link.url) + '" class="btn btn-light text-sm" target="_blank" rel="noopener noreferrer">' + escapeHtml(link.label) + "</a>";
     }).join("") + "</div>" : "";
 
-    return '<div class="bg-white p-8 rounded-2xl card-border"><h3 class="text-2xl font-semibold mb-4">' + escapeHtml(group.title) + '</h3><ul class="space-y-3 text-left text-gray-700 list-disc list-inside">' + group.items.map(function (item) {
+    return '<div class="bg-white p-8 rounded-2xl card-border"><h3 class="text-2xl font-semibold mb-4">' + escapeHtml(group.title) + '</h3><ul class="space-y-3 text-left text-gray-700 list-disc list-inside">' + group.items.map(function (item, index) {
+      var link = inlineLinks ? group.links[index] : null;
+
+      if (link && isUsableUrl(link.url)) {
+        return '<li><a href="' + escapeHtml(link.url) + '" class="achievement-inline-link" target="_blank" rel="noopener noreferrer">' + escapeHtml(item) + "</a></li>";
+      }
+
       return "<li>" + escapeHtml(item) + "</li>";
     }).join("") + "</ul>" + links + "</div>";
   }).join("");
@@ -475,9 +493,9 @@ function renderPortfolio(data) {
   renderAbout(data.about);
   renderSkills(data.skills);
   renderAchievements(data.achievements);
-  document.getElementById("projectsKicker").textContent = data.projects.kicker;
+  setTextAndToggleVisibility("projectsKicker", data.projects.kicker);
   document.getElementById("projectsTitle").textContent = data.projects.title;
-  document.getElementById("projectsDescription").textContent = data.projects.description;
+  setTextAndToggleVisibility("projectsDescription", data.projects.description);
   renderContact(data.contact);
   renderFooter(data.footer, data.navigation.links);
   initializeProjects(data.projects.items);

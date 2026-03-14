@@ -37,7 +37,7 @@
       ]
     },
     about: {
-      kicker: "Summary from the latest CV",
+      kicker: "",
       title: "Summary & Education",
       image: "Images/ProfileImage1.png",
       imageAlt: "Hoang Van Thien profile image",
@@ -68,7 +68,7 @@
       ]
     },
     skills: {
-      kicker: "Technical skills from the latest CV",
+      kicker: "",
       title: "Skills",
       groups: [
         {
@@ -124,16 +124,16 @@
       ]
     },
     achievements: {
-      kicker: "Awards from the latest CV",
+      kicker: "",
       title: "Awards & Activities",
       groups: [
         {
-          title: "Academic & contest awards",
+          title: "Academic Awards",
           items: [
-            "2nd Place - FIT Code Contest, UEF | 10/2025",
-            "3rd Place - FIT Code Contest, UEF | 09/2024",
-            "3rd Place - FIT Code Contest, UEF | 09/2023",
-            "3rd Place - UEF Math Olympiad, UEF | 11/2023"
+            "Second Prize, FIT Code Contest 2025, UEF (October 2025)",
+            "Third Prize, FIT Code Contest 2024, UEF (September 2024)",
+            "Third Prize, FIT Code Contest 2023, UEF (September 2023)",
+            "Third Prize, UEF Math Olympiad 2023 (November 2023)"
           ],
           links: [
             {
@@ -155,24 +155,24 @@
           ]
         },
         {
-          title: "Profiles & focus",
+          title: "Professional Activities",
           items: [
-            "Portfolio and public CV available online.",
-            "GitHub profile contains academic and personal web application projects.",
-            "Current focus: backend, business workflows, and fullstack web application development."
+            "Built and maintained a public portfolio and CV website to showcase projects, technical skills, and career profile.",
+            "Published academic and personal web application projects on GitHub with source code and project references.",
+            "Continuously strengthened backend and fullstack development skills through hands-on projects focused on business workflows, database design, and maintainable web applications."
           ],
           links: [
-            { label: "Portfolio", url: "https://alucard30dec.github.io/" },
-            { label: "GitHub Profile", url: "https://github.com/Alucard30Dec" },
-            { label: "LinkedIn Profile", url: "https://www.linkedin.com/in/thi%C3%AAn-ho%C3%A0ng-9427732b5/" }
+            { label: "Portfolio Website", url: "https://alucard30dec.github.io/" },
+            { label: "GitHub Projects", url: "https://github.com/Alucard30Dec" },
+            { label: "LinkedIn", url: "https://www.linkedin.com/in/thi%C3%AAn-ho%C3%A0ng-9427732b5/" }
           ]
         }
       ]
     },
     projects: {
-      kicker: "Projects from the latest CV",
+      kicker: "",
       title: "Project Experience",
-      description: "Database-driven web application projects selected from the latest CV and aligned with backend / fullstack internship roles.",
+      description: "",
       items: [
         {
           title: "Online Sales & Inventory Management System",

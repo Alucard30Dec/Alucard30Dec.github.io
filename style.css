@@ -199,6 +199,24 @@ body {
   min-height: 100%;
 }
 
+.achievement-inline-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.achievement-inline-link:hover {
+  color: #0f172a;
+  border-bottom-color: #cbd5e1;
+}
+
+.achievement-inline-link:focus-visible {
+  outline: 2px solid #94a3b8;
+  outline-offset: 2px;
+  border-radius: 0.2rem;
+}
+
 .skill-card {
   display: flex;
   flex-direction: column;
