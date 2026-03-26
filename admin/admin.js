@@ -271,6 +271,7 @@ function renderProjectsSection() {
         field("Image", 'projects.items.' + index + '.image', project.image) +
         field("GitHub URL", 'projects.items.' + index + '.github', project.github) +
         field("Demo URL", 'projects.items.' + index + '.demo', project.demo) +
+        field("Report URL", 'projects.items.' + index + '.report', project.report) +
         field("Score", 'projects.items.' + index + '.score', project.score) +
         field("Thoi gian", 'projects.items.' + index + '.period', project.period) +
         field("Summary", 'projects.items.' + index + '.summary', project.summary, { type: "textarea", full: true }) +
@@ -435,6 +436,7 @@ function collectFormData() {
           image: getFieldValue('projects.items.' + index + '.image'),
           github: getFieldValue('projects.items.' + index + '.github'),
           demo: getFieldValue('projects.items.' + index + '.demo'),
+          report: getFieldValue('projects.items.' + index + '.report'),
           score: getFieldValue('projects.items.' + index + '.score'),
           period: getFieldValue('projects.items.' + index + '.period'),
           summary: getFieldValue('projects.items.' + index + '.summary'),
@@ -545,6 +547,7 @@ function handleAction(action, index) {
       image: "Images/project.png",
       github: "#",
       demo: "#",
+      report: "#",
       score: "",
       period: "",
       summary: "",

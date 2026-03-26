@@ -153,7 +153,7 @@ function buildCard(project, roleClass, index) {
     return "";
   }
 
-  return '<article class="card3d card3d--frame ' + roleClass + '" data-index="' + index + '"><div class="p-6 text-center"><div class="card-media"><img src="' + escapeHtml(project.image) + '" alt="' + escapeHtml(project.title) + '" onerror="this.src=\'https://placehold.co/600x600/cccccc/999?text=Image+Not+Found\'; this.onerror=null;"></div><h3 class="project-title">' + escapeHtml(project.title) + '</h3><div class="project-buttons">' + buildProjectLink("Github", project.github, "btn-dark-solid") + buildProjectLink("Demo", project.demo, "btn-light-outline", project.demoDisabled) + "</div></div></article>";
+  return '<article class="card3d card3d--frame ' + roleClass + '" data-index="' + index + '"><div class="p-6 text-center"><div class="card-media"><img src="' + escapeHtml(project.image) + '" alt="' + escapeHtml(project.title) + '" onerror="this.src=\'https://placehold.co/600x600/cccccc/999?text=Image+Not+Found\'; this.onerror=null;"></div><h3 class="project-title">' + escapeHtml(project.title) + '</h3><div class="project-buttons">' + buildProjectLink("Github", project.github, "btn-dark-solid") + buildProjectLink("Demo", project.demo, "btn-light-outline") + buildProjectLink("Report", project.report, "btn-light-outline") + "</div></div></article>";
 }
 
 function renderContact(data) {

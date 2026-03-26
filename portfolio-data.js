@@ -178,8 +178,8 @@
           title: "Online Sales & Inventory Management System",
           image: "https://placehold.co/600x600/e2e8f0/0f172a?text=Sales+%26+Inventory",
           github: "https://github.com/Alucard30Dec/Online-Sales-Management-System",
-          demo: "project-demo.html?project=online-sales-management-system",
-          demoDisabled: true,
+          demo: "Projects/Online-Sales-Management-System/Online-Sales-Management-System-Demo.mp4",
+          report: "Projects/Online-Sales-Management-System/Online-Sales-Management-System-Report.pdf",
           score: "",
           period: "12/2025 - 01/2026",
           summary: "Full-stack ASP.NET Core MVC web application for sales, purchasing, inventory, and reporting. It combines a public storefront with a permission-based admin dashboard and supports complex business operations for stock and sales management.",
@@ -196,8 +196,8 @@
           title: "Private Clinic Management System",
           image: "Images/PrivateClinicManagementSystem.jpg",
           github: "https://github.com/Alucard30Dec/Private-Clinic",
-          demo: "project-demo.html?project=private-clinic-management-system",
-          demoDisabled: true,
+          demo: "#",
+          report: "Projects/Private-Clinic/Private-Clinic-Report.pdf",
           score: "",
           period: "09/2025 - 10/2025",
           summary: "Role-based clinic management web application with appointment booking, scheduling, and patient workflow support. The system covers Admin, Receptionist, Doctor, and Patient workflows with validation-heavy scheduling rules.",
@@ -255,6 +255,14 @@
 
   function asBoolean(value, fallback) {
     return typeof value === "boolean" ? value : fallback;
+  }
+
+  function hasUsableUrl(url) {
+    return typeof url === "string" && url.trim() !== "" && url.trim() !== "#";
+  }
+
+  function isLegacyProjectDemoUrl(url) {
+    return /^project-demo\.html\?project=/i.test(String(url || "").trim());
   }
 
   function normalizeArray(value, fallback, normalizer) {
@@ -333,6 +341,7 @@
     var source = item && typeof item === "object" ? item : {};
     var sourceGithub = asString(source.github, fallback.github || "#");
     var sourceDemo = asString(source.demo, fallback.demo || "#");
+    var sourceReport = asString(source.report, fallback.report || "#");
     var sourceDemoDisabled = typeof source.demoDisabled === "boolean"
       ? source.demoDisabled
       : !!(fallback && fallback.demoDisabled);
@@ -345,11 +354,24 @@
       sourceDemo = fallback.demo;
     }
 
+    if ((sourceReport === "#" || sourceReport === "") && fallback.report && fallback.report !== "#") {
+      sourceReport = fallback.report;
+    }
+
+    if (isLegacyProjectDemoUrl(sourceDemo) && asString(source.title, "") === asString(fallback.title, "")) {
+      sourceDemo = asString(fallback.demo, "#");
+    }
+
+    if (hasUsableUrl(sourceDemo)) {
+      sourceDemoDisabled = false;
+    }
+
     return {
       title: asString(source.title, fallback.title || ""),
       image: asString(source.image, fallback.image || ""),
       github: sourceGithub,
       demo: sourceDemo,
+      report: sourceReport,
       demoDisabled: sourceDemoDisabled,
       score: asString(source.score, fallback.score || ""),
       period: asString(source.period, fallback.period || ""),
