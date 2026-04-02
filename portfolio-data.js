@@ -175,6 +175,24 @@
       description: "",
       items: [
         {
+          title: "Construction Payment Request Management System",
+          image: "Projects/Construction-Payment-Request/z7683936752479_7f1acc6eb29361b6692d6f1c21f4d6f7.jpg",
+          github: "https://github.com/Alucard30Dec/Construction-Payment-Request",
+          demo: "https://construction-payment-request.onrender.com",
+          report: "#",
+          score: "",
+          period: "03/2026 - 04/2026",
+          summary: "Full-stack internal workflow platform for construction payment approval. The system manages suppliers, projects, contracts, invoices, attachments, and accounting confirmations through a multi-step approval process driven by business rules and payment thresholds.",
+          tech: [
+            "Tech Stack: React, TypeScript, Ant Design, .NET 8 Web API, Entity Framework Core",
+            "Authentication & Authorization: JWT authentication with role-based permissions",
+            "Workflow Logic: Multi-step approval based on business rules, department scope, and payment thresholds",
+            "Data Scope: Suppliers, projects, contracts, invoices, attachments, accounting confirmations",
+            "Infrastructure: SQLite, MySQL, TiDB, health checks, Docker, Render deployment",
+            "Engineering Practice: Audit logging, debugging, documentation, AI-assisted implementation with manual business-rule validation"
+          ]
+        },
+        {
           title: "Online Sales & Inventory Management System",
           image: "https://placehold.co/600x600/e2e8f0/0f172a?text=Sales+%26+Inventory",
           github: "https://github.com/Alucard30Dec/Online-Sales-Management-System",
@@ -382,6 +400,54 @@
     };
   }
 
+  function getProjectIdentity(project) {
+    var source = project && typeof project === "object" ? project : {};
+    var title = asString(source.title, "").trim().toLowerCase();
+    var github = asString(source.github, "").trim().toLowerCase();
+    return github || title;
+  }
+
+  function normalizeProjectsCollection(sourceItems, defaultItems) {
+    var sourceList = Array.isArray(sourceItems) ? sourceItems : [];
+    var defaultList = Array.isArray(defaultItems) ? defaultItems : [];
+    var matchedSourceIndexes = {};
+    var merged = [];
+
+    defaultList.forEach(function (defaultProject) {
+      var defaultId = getProjectIdentity(defaultProject);
+      var matchedIndex = -1;
+
+      sourceList.some(function (sourceProject, index) {
+        if (matchedSourceIndexes[index]) {
+          return false;
+        }
+
+        if (getProjectIdentity(sourceProject) === defaultId) {
+          matchedIndex = index;
+          return true;
+        }
+
+        return false;
+      });
+
+      if (matchedIndex >= 0) {
+        matchedSourceIndexes[matchedIndex] = true;
+        merged.push(normalizeProject(sourceList[matchedIndex], defaultProject));
+        return;
+      }
+
+      merged.push(normalizeProject(defaultProject, defaultProject));
+    });
+
+    sourceList.forEach(function (sourceProject, index) {
+      if (!matchedSourceIndexes[index]) {
+        merged.push(normalizeProject(sourceProject, {}));
+      }
+    });
+
+    return merged;
+  }
+
   function normalizeContactMethod(item, fallback) {
     var source = item && typeof item === "object" ? item : {};
     return {
@@ -442,7 +508,7 @@
         kicker: asString(source.projects && source.projects.kicker, defaults.projects.kicker),
         title: asString(source.projects && source.projects.title, defaults.projects.title),
         description: asString(source.projects && source.projects.description, defaults.projects.description),
-        items: normalizeArray(source.projects && source.projects.items, defaults.projects.items, normalizeProject)
+        items: normalizeProjectsCollection(source.projects && source.projects.items, defaults.projects.items)
       },
       contact: {
         title: asString(source.contact && source.contact.title, defaults.contact.title),
