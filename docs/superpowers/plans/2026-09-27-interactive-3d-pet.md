@@ -35,6 +35,7 @@
 ## File Structure
 
 - `vendor/three/three.module.js`: vendored Three.js `0.186.1` ES module.
+- `vendor/three/three.core.js`: core module imported by `three.module.js` in Three.js `0.186.1`.
 - `vendor/three/OrbitControls.js`: matching OrbitControls module from the same Three.js release.
 - `vendor/three/LICENSE`: upstream MIT license for the vendored files.
 - `pet-3d.js`: owns scene construction, materials, camera, OrbitControls, resize/theme/visibility handling, fallback transition, and cleanup.
@@ -50,6 +51,7 @@
 
 **Files:**
 - Create: `vendor/three/three.module.js`
+- Create: `vendor/three/three.core.js`
 - Create: `vendor/three/OrbitControls.js`
 - Create: `vendor/three/LICENSE`
 
@@ -60,19 +62,20 @@
 
 - [ ] **Step 1: Acquire the exact upstream release into a temporary directory**
 
-Use `npm pack three@0.186.1` only as an acquisition step. Extract the tarball outside the repository and copy only `build/three.module.js`, `examples/jsm/controls/OrbitControls.js`, and `LICENSE` into `vendor/three/`. Do not add `package.json`, `package-lock.json`, or `node_modules`.
+Use `npm pack three@0.186.1` only as an acquisition step. Extract the tarball outside the repository and copy only `build/three.module.js`, `build/three.core.js`, `examples/jsm/controls/OrbitControls.js`, and `LICENSE` into `vendor/three/`. Do not add `package.json`, `package-lock.json`, or `node_modules`.
 
 - [ ] **Step 2: Verify the vendored modules are parseable and version-matched**
 
 Run:
 
 ```powershell
-node --input-type=module --check < vendor/three/three.module.js
-node --input-type=module --check < vendor/three/OrbitControls.js
+Get-Content -Raw vendor/three/three.module.js | node --input-type=module --check
+Get-Content -Raw vendor/three/three.core.js | node --input-type=module --check
+Get-Content -Raw vendor/three/OrbitControls.js | node --input-type=module --check
 Select-String -Path vendor/three/OrbitControls.js -Pattern "from 'three'"
 ```
 
-Expected: both syntax checks exit `0`; OrbitControls keeps its upstream bare `three` import so Task 3's import map resolves it locally.
+Expected: all syntax checks exit `0`; `three.module.js` can resolve its sibling `three.core.js`, and OrbitControls keeps its upstream bare `three` import so Task 3's import map resolves it locally.
 
 - [ ] **Step 3: Commit only the new vendor directory**
 
@@ -136,7 +139,7 @@ Wrap initialization in `try/catch`. On success, render once and add `is-3d-ready
 Run:
 
 ```powershell
-node --input-type=module --check < pet-3d.js
+Get-Content -Raw pet-3d.js | node --input-type=module --check
 ```
 
 Expected: exit `0` with no syntax error.
@@ -208,11 +211,11 @@ Do not commit these shared files yet because they already contain pending user w
 
 **Interfaces:**
 - Local server stays `http://localhost:5500/` through the existing `Run Portfolio Web` task.
-- GitHub Pages artifact must contain root `pet-3d.js` and `vendor/three/{three.module.js,OrbitControls.js,LICENSE}`.
+- GitHub Pages artifact must contain root `pet-3d.js` and `vendor/three/{three.module.js,three.core.js,OrbitControls.js,LICENSE}`.
 
 - [ ] **Step 1: Extend GitHub Pages assembly for the 3D runtime**
 
-Keep the existing asset copies. Change the assembly block so it creates `_site/vendor/three`, copies `pet-3d.js` with the root runtime files, and copies the three vendored files into `_site/vendor/three/`.
+Keep the existing asset copies. Change the assembly block so it creates `_site/vendor/three`, copies `pet-3d.js` with the root runtime files, and copies the four vendored files into `_site/vendor/three/`.
 
 - [ ] **Step 2: Update the README runtime file list**
 
@@ -226,6 +229,7 @@ Start the existing local server, then request these paths:
 /
 /pet-3d.js
 /vendor/three/three.module.js
+/vendor/three/three.core.js
 /vendor/three/OrbitControls.js
 ```
 
