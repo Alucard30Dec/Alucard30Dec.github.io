@@ -1,159 +1,308 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hoang Van Thien - Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ["Inter", "sans-serif"] }
-        }
-      }
-    };
-  </script>
+  <meta name="description" content="Portfolio of Hoang Van Thien, a Fresher Software Engineer focused on .NET backend and full-stack development." />
+  <meta name="theme-color" content="#f7f9fc" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Hoang Van Thien | .NET Backend / Full-stack Developer" />
+  <meta property="og:description" content="Portfolio of Hoang Van Thien, a Fresher Software Engineer focused on .NET backend and full-stack development." />
+  <meta property="og:url" content="https://alucard30dec.github.io/" />
+  <meta property="og:image" content="https://alucard30dec.github.io/Images/ProfileImage.png" />
+  <meta property="og:image:alt" content="Hoang Van Thien" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Hoang Van Thien | .NET Backend / Full-stack Developer" />
+  <meta name="twitter:description" content="Portfolio of Hoang Van Thien, a Fresher Software Engineer focused on .NET backend and full-stack development." />
+  <meta name="twitter:image" content="https://alucard30dec.github.io/Images/ProfileImage.png" />
+  <title>Hoang Van Thien | .NET Backend / Full-stack Developer</title>
+  <link rel="canonical" href="https://alucard30dec.github.io/" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="style.css" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hoang Van Thien",
+      "url": "https://alucard30dec.github.io/",
+      "image": "https://alucard30dec.github.io/Images/ProfileImage.png",
+      "jobTitle": ".NET Backend / Full-stack Developer",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ho Chi Minh City",
+        "addressCountry": "VN"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Ho Chi Minh City University of Economics and Finance"
+      },
+      "sameAs": [
+        "https://github.com/Alucard30Dec",
+        "https://www.linkedin.com/in/thi%C3%AAn-ho%C3%A0ng-9427732b5/"
+      ]
+    }
+  </script>
 </head>
-<body class="antialiased">
-  <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 shadow-sm border-b border-gray-200">
-    <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="#home" class="text-xl font-bold text-gray-900" id="siteBrand">Hoang Van Thien</a>
-      <div class="hidden md:flex items-center space-x-6" id="desktopNavLinks"></div>
-      <div class="md:hidden">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to content</a>
+
+  <header class="site-header" id="siteHeader">
+    <nav class="nav-shell container" aria-label="Primary navigation">
+      <a class="site-brand" href="#home" id="siteBrandLink" aria-label="Hoang Van Thien - Home">
+        <span class="brand-mark" aria-hidden="true">HV</span>
+        <span id="siteBrand">Hoang Van Thien</span>
+      </a>
+
+      <div class="nav-actions">
+        <div class="desktop-nav" id="desktopNavLinks"></div>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark theme" title="Switch theme">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.4 15.2A8.5 8.5 0 0 1 8.8 3.6 8.5 8.5 0 1 0 20.4 15.2Z"></path>
+          </svg>
+        </button>
+        <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileNavMenu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
       </div>
     </nav>
+    <div class="mobile-nav container" id="mobileNavMenu" hidden></div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-6 pt-24 md:pt-28">
-    <section id="home" class="min-h-[60vh] flex items-center py-10 md:py-12">
-      <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
-        <div class="order-1 md:order-2 flex justify-center">
-          <img
-            id="heroAvatar"
-            src="Images/ProfileImage.png"
-            alt="Hoang Van Thien"
-            class="rounded-full shadow-xl w-60 h-60 md:w-80 md:h-80 object-cover border-4 border-white"
-            onerror="this.src='https://placehold.co/300x300/E0E0E0/333?text=HVT'; this.onerror=null;"
-          />
+  <main id="mainContent">
+    <section class="hero section-shell" id="home">
+      <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="availability-badge" id="heroStatus"></div>
+          <p class="eyebrow" id="heroIntro"></p>
+          <h1 id="heroName">Hoang Van Thien</h1>
+          <p class="hero-role" id="heroRole"></p>
+          <p class="hero-tagline" id="heroTagline"></p>
+          <div class="hero-actions" id="heroActions"></div>
+          <div class="hero-social-row">
+            <span class="hero-social-label">Find me online</span>
+            <div class="social-links" id="heroSocials"></div>
+          </div>
+          <div class="hero-stats" id="heroStats"></div>
         </div>
 
-        <div class="order-2 md:order-1 text-center md:text-left">
-          <span class="text-lg font-medium text-gray-600" id="heroIntro">I am</span>
-          <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mt-1 mb-4" id="heroName">Hoang Van Thien</h1>
-          <h2 class="text-2xl font-medium text-gray-700" id="heroRole">Software Engineering Student</h2>
-          <p class="mt-3 text-lg text-gray-600" id="heroTagline"></p>
-          <div class="mt-6 flex flex-wrap justify-center md:justify-start gap-4" id="heroActions"></div>
-          <div class="mt-6 flex justify-center md:justify-start space-x-5" id="heroSocials"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="py-14 md:py-16">
-      <div class="text-center mb-8">
-        <span class="text-sm font-medium text-gray-500" id="aboutKicker"></span>
-        <h2 class="text-4xl font-bold mt-1" id="aboutTitle"></h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        <div class="flex justify-center">
-          <img
-            id="aboutImage"
-            src="https://placehold.co/450x300/E0E0E0/333?text=Profile+Image"
-            alt="Profile Image"
-            class="rounded-2xl shadow-lg object-cover w-full h-auto"
-            onerror="this.src='https://placehold.co/450x300/E0E0E0/333?text=Profile+Image'; this.onerror=null;"
-          />
-        </div>
-
-        <div>
-          <div class="bg-white p-6 rounded-2xl card-border mb-4">
-            <div class="flex items-center space-x-4">
-              <div class="bg-gray-100 p-3 rounded-full">
-                <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 21.052a11.952 11.952 0 01-6.824-4.001 12.083 12.083 0 01-.665-6.479L12 14z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7"></path>
-                </svg>
+        <div class="hero-visual reveal">
+          <div class="profile-showcase">
+            <div class="profile-card">
+              <div class="profile-card-topline">
+                <span><span class="live-dot" aria-hidden="true"></span> Software Engineer</span>
+                <span>HCMC</span>
               </div>
-              <div>
-                <h3 class="text-xl font-semibold" id="aboutEducationTitle"></h3>
-                <p class="text-gray-600" id="aboutEducationSchool"></p>
-                <p class="text-gray-600" id="aboutEducationDegree"></p>
+              <div class="profile-photo-wrap">
+                <img id="heroAvatar" src="Images/ProfileImage.png" alt="Hoang Van Thien" fetchpriority="high" decoding="async" />
+              </div>
+              <div class="profile-card-footer">
+                <div>
+                  <span class="profile-card-label">Current focus</span>
+                  <strong>.NET business applications</strong>
+                </div>
+                <span class="profile-card-number">01</span>
+              </div>
+            </div>
+            <div class="floating-chip floating-chip-dotnet"><span aria-hidden="true">{ }</span> .NET 8</div>
+            <div class="floating-chip floating-chip-data"><span aria-hidden="true">▰</span> SQL / Data</div>
+            <div class="pet-dock">
+              <div class="voxel-pet" id="voxelPet" role="img" aria-label="Interactive 3D voxel tabby cat on a cream sofa with a silver laptop, patterned golden pillow and toy ball. Drag with a mouse or one finger to rotate 360 degrees; use the mouse wheel or pinch to zoom.">
+                <span class="pet-stage-inner" aria-hidden="true">
+                  <span class="pet-3d-host" data-pet-3d-host></span>
+                  <span class="pet-fallback">
+                  <svg class="pet-scene" viewBox="0 0 320 240" focusable="false">
+                    <ellipse class="pet-shadow" cx="160" cy="210" rx="126" ry="17"></ellipse>
+
+                    <g class="pet-bed">
+                      <ellipse class="pet-bed-pillow" cx="208" cy="76" rx="68" ry="31"></ellipse>
+                      <polygon class="pet-bed-fold" points="157,77 207,52 261,73 209,98"></polygon>
+                      <polygon class="pet-bed-sheet" points="27,130 153,76 294,126 169,188"></polygon>
+                      <polygon class="pet-bed-fold" points="27,130 169,188 169,211 27,151"></polygon>
+                      <polygon class="pet-bed-cover" points="169,188 294,126 294,149 169,211"></polygon>
+                    </g>
+
+                    <g class="pet-cat-body">
+                      <path class="pet-fur-tabby" d="M187 130c8-18 39-22 57-8 14 11 20 34 8 47-15 16-51 11-66-4-10-10-7-24 1-35Z"></path>
+                      <path class="pet-fur-white" d="M176 130c4-12 17-17 29-12 12 5 18 22 14 36-3 12-13 18-25 12-15-7-23-23-18-36Z"></path>
+                      <ellipse class="pet-fur-white" cx="183" cy="150" rx="16" ry="8" transform="rotate(-15 183 150)"></ellipse>
+                      <ellipse class="pet-fur-white" cx="207" cy="153" rx="16" ry="8" transform="rotate(8 207 153)"></ellipse>
+                      <path class="pet-fur-tabby-dark" d="M232 133c9 2 15 9 16 16-7-3-12-8-16-16ZM223 151c8 0 14 4 18 10-8 0-14-3-18-10Z"></path>
+                    </g>
+
+                    <g class="pet-cat-head">
+                      <polygon class="pet-ear-outer" points="174,92 179,64 199,82 198,99"></polygon>
+                      <polygon class="pet-ear-outer" points="214,82 235,63 240,94 225,101"></polygon>
+                      <polygon class="pet-ear-inner" points="181,84 183,71 194,83 193,91"></polygon>
+                      <polygon class="pet-ear-inner" points="221,83 232,71 234,88 226,93"></polygon>
+                      <ellipse class="pet-fur-white" cx="207" cy="101" rx="36" ry="31"></ellipse>
+                      <path class="pet-fur-tabby" d="M173 97 179 78 190 84 201 72 210 83 222 75 239 93 235 101c-13-8-21-9-29-6-12-4-21-3-33 7Z"></path>
+                      <path class="pet-fur-white" d="M202 78 209 84 213 98 204 96 198 83Z"></path>
+                      <ellipse class="pet-fur-tabby" cx="192" cy="102" rx="8" ry="10"></ellipse>
+                      <ellipse class="pet-fur-tabby" cx="220" cy="102" rx="8" ry="10"></ellipse>
+                      <ellipse class="pet-eye" cx="193" cy="101" rx="4.2" ry="6"></ellipse>
+                      <ellipse class="pet-eye" cx="219" cy="101" rx="4.2" ry="6"></ellipse>
+                      <ellipse class="pet-pupil" cx="193" cy="101" rx="1.7" ry="4.4"></ellipse>
+                      <ellipse class="pet-pupil" cx="219" cy="101" rx="1.7" ry="4.4"></ellipse>
+                      <circle class="pet-eye-glint" cx="194" cy="99" r="1.4"></circle>
+                      <circle class="pet-eye-glint" cx="220" cy="99" r="1.4"></circle>
+                      <ellipse class="pet-muzzle" cx="201" cy="114" rx="9" ry="6"></ellipse>
+                      <ellipse class="pet-muzzle" cx="212" cy="114" rx="9" ry="6"></ellipse>
+                      <path class="pet-nose" d="m203 110 8 0-4 5Z"></path>
+                      <path class="pet-whisker" d="m195 114-15-3m15 7-17 2m31-6 16-3m-16 7 17 2"></path>
+                    </g>
+
+                    <path class="pet-bed-fold" d="M174 164c18-17 39-19 59-9 17 8 28 16 54 7l25 13v39h-92c-22-9-40-24-46-50Z"></path>
+
+                    <g class="pet-laptop">
+                      <polygon class="pet-laptop-shell" points="33,43 112,73 114,161 36,132"></polygon>
+                      <polygon class="pet-laptop-panel" points="40,53 105,78 107,151 43,127"></polygon>
+                      <circle class="pet-laptop-logo" cx="75" cy="103" r="5"></circle>
+                      <polygon class="pet-laptop-shell" points="108,132 177,154 222,135 153,113"></polygon>
+                      <polygon class="pet-laptop-keyboard" points="118,135 176,154 208,140 151,121"></polygon>
+                      <path class="pet-laptop-keys" d="m126 138 5-2m2 5 5-2m3 5 5-2m2 5 5-2m3-15 5-2m2 5 5-2m3 5 5-2m2 5 5-2m-25 4 5-2m3 5 5-2m2-15 5-2m3 5 5-2m2 5 5-2"></path>
+                    </g>
+                  </svg>
+                  </span>
+                </span>
+                <span class="pet-label">drag · rotate · zoom</span>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#experience" aria-label="Scroll to experience">
+        <span>Explore</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+      </a>
+    </section>
 
-          <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left" id="aboutHighlights"></div>
-          <div id="aboutParagraphs" class="mt-4"></div>
+    <section class="section-shell section-tint" id="experience">
+      <div class="container">
+        <div class="section-heading section-heading-left reveal">
+          <p class="eyebrow" id="experienceKicker"></p>
+          <h2 id="experienceTitle"></h2>
+          <p class="section-description section-description-left">Hands-on experience with warehouse workflows, enterprise UI, data validation, transactions and reporting.</p>
+        </div>
+        <div class="experience-list reveal" id="experienceItems"></div>
+      </div>
+    </section>
+
+    <section class="section-shell" id="projects">
+      <div class="container">
+        <div class="section-heading section-heading-left reveal">
+          <p class="eyebrow" id="projectsKicker"></p>
+          <h2 id="projectsTitle"></h2>
+          <p class="section-description section-description-left" id="projectsDescription"></p>
+        </div>
+        <div class="project-grid" id="projTrack"></div>
+      </div>
+    </section>
+
+    <section class="section-shell section-tint" id="skills">
+      <div class="container">
+        <div class="section-heading section-heading-left reveal">
+          <p class="eyebrow" id="skillsKicker"></p>
+          <h2 id="skillsTitle"></h2>
+          <p class="section-description section-description-left">A practical stack centered on C#/.NET, relational data, business workflows and modern web interfaces.</p>
+        </div>
+        <div class="skills-grid" id="skillsGroups"></div>
+      </div>
+    </section>
+
+    <section class="section-shell" id="about">
+      <div class="container">
+        <div class="section-heading section-heading-left reveal">
+          <p class="eyebrow" id="aboutKicker"></p>
+          <h2 id="aboutTitle"></h2>
+        </div>
+        <div class="profile-grid reveal">
+          <div class="profile-image-frame">
+            <img id="aboutImage" src="Images/ProfileImage1.png" alt="Hoang Van Thien" loading="lazy" decoding="async" />
+            <div class="profile-image-caption">
+              <span>Based in</span>
+              <strong>Ho Chi Minh City, Vietnam</strong>
+            </div>
+          </div>
+          <div class="profile-content">
+            <article class="education-card">
+              <span class="education-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="m3 10 9-5 9 5-9 5-9-5Z"></path><path d="M7 12.5V17c3 2 7 2 10 0v-4.5M21 10v6"></path></svg>
+              </span>
+              <div>
+                <p class="card-kicker">Education</p>
+                <h3 id="aboutEducationTitle"></h3>
+                <p id="aboutEducationSchool"></p>
+                <p id="aboutEducationDegree"></p>
+              </div>
+            </article>
+            <div class="highlight-grid" id="aboutHighlights"></div>
+            <div class="profile-copy" id="aboutParagraphs"></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="skills" class="px-4 sm:px-5 md:px-6 lg:px-7 py-7 md:py-8 bg-white rounded-[1.35rem] my-4 md:my-6 card-border">
-      <div class="text-center mb-4 md:mb-5">
-        <span class="text-sm font-medium text-gray-500" id="skillsKicker"></span>
-        <h2 class="text-4xl font-bold mt-1" id="skillsTitle"></h2>
+    <section class="section-shell section-tint" id="achievements">
+      <div class="container">
+        <div class="section-heading section-heading-left reveal">
+          <p class="eyebrow" id="achievementsKicker"></p>
+          <h2 id="achievementsTitle"></h2>
+          <p class="section-description section-description-left">Competitive programming and mathematics achievements during university.</p>
+        </div>
+        <div class="awards-grid" id="achievementGroups"></div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-3" id="skillsGroups"></div>
     </section>
 
-    <section id="achievements" class="py-14 md:py-16">
-      <div class="text-center mb-8">
-        <span class="text-sm font-medium text-gray-500" id="achievementsKicker"></span>
-        <h2 class="text-4xl font-bold mt-1" id="achievementsTitle"></h2>
+    <section class="section-shell contact-section" id="contact">
+      <div class="container reveal">
+        <div class="contact-panel">
+          <div class="contact-copy">
+            <p class="eyebrow">Contact</p>
+            <h2 id="contactTitle"></h2>
+            <p class="section-description section-description-left" id="contactDescription"></p>
+          </div>
+          <div class="contact-methods" id="contactMethods"></div>
+        </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="achievementGroups"></div>
-    </section>
-
-    <section id="projects" class="py-14 md:py-16">
-      <div class="text-center mb-8">
-        <span class="text-sm font-medium text-gray-500" id="projectsKicker"></span>
-        <h2 class="text-5xl font-extrabold tracking-tight mt-1" id="projectsTitle"></h2>
-        <p class="mt-3 text-gray-600 max-w-2xl mx-auto" id="projectsDescription"></p>
-      </div>
-
-      <div class="relative max-w-6xl mx-auto carousel-3d overflow-visible">
-        <button id="projPrev" class="nav-arrow absolute -left-8 md:-left-16 top-1/2 -translate-y-1/2" aria-label="Previous project">
-          <svg viewBox="0 0 24 24" class="w-7 h-7"><path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>
-        </button>
-        <button id="projNext" class="nav-arrow absolute -right-8 md:-right-16 top-1/2 -translate-y-1/2" aria-label="Next project">
-          <svg viewBox="0 0 24 24" class="w-7 h-7"><path fill="currentColor" d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"></path></svg>
-        </button>
-        <div id="projTrack" class="flex items-stretch justify-center gap-2 px-2 md:px-4 will-change-transform will-change-opacity"></div>
-      </div>
-
-      <div id="projDetail" class="max-w-6xl mx-auto mt-8 bg-white rounded-3xl border border-gray-200 shadow-sm p-8 md:p-12 text-center transition-all duration-300"></div>
-    </section>
-
-    <section id="contact" class="py-14 md:py-16 text-center">
-      <h2 class="text-5xl font-extrabold tracking-tight mt-1 mb-5" id="contactTitle"></h2>
-      <p class="text-gray-600 max-w-xl mx-auto mb-8" id="contactDescription"></p>
-      <div class="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3" id="contactMethods"></div>
     </section>
   </main>
 
-  <footer class="border-t border-gray-200 mt-12">
-    <div class="max-w-6xl mx-auto px-6 py-10 text-center">
-      <div class="flex justify-center space-x-6 mb-6 md:hidden flex-wrap" id="footerNavLinks"></div>
-      <p class="text-gray-500 text-sm" id="footerCopyright"></p>
-      <p class="text-gray-400 text-xs mt-2">
-        <span id="footerPortfolioLabel"></span>
-        <a href="https://alucard30dec.github.io/" target="_blank" rel="noopener noreferrer" class="underline hover:text-gray-600" id="footerPortfolioLink">
-          alucard30dec.github.io
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-block">
+        <a class="site-brand footer-brand" href="#home">
+          <span class="brand-mark" aria-hidden="true">HV</span>
+          <span>Hoang Van Thien</span>
         </a>
+        <p id="footerCopyright"></p>
+      </div>
+      <nav class="footer-nav" id="footerNavLinks" aria-label="Footer navigation"></nav>
+      <p class="footer-portfolio">
+        <span id="footerPortfolioLabel"></span>
+        <a id="footerPortfolioLink" href="https://alucard30dec.github.io/"></a>
       </p>
     </div>
   </footer>
 
-  <script src="portfolio-data.js" defer></script>
-  <script src="script.js" defer></script>
+  <script src="portfolio-data.js"></script>
+  <script src="script.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three/three.module.js"
+      }
+    }
+  </script>
+  <script type="module" src="pet-3d.js"></script>
 </body>
 </html>

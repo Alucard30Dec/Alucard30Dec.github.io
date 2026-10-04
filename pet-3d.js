@@ -8,42 +8,23 @@ var scene = null;
 var camera = null;
 var controls = null;
 var resizeObserver = null;
-var themeObserver = null;
 var frameId = 0;
 var disposed = false;
 var geometries = [];
 var materials = [];
-var materialBindings = [];
+var instancedMeshes = [];
 var keyLight = null;
 var fillLight = null;
-var shadowMaterial = null;
+var voxelGeometry = null;
+var voxelBatches = new Map();
 
-function getCssColor(variableName, fallback) {
-  var value = getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
-  return value || fallback;
-}
-
-function createMaterial(variableName, fallback, options) {
-  var material = new THREE.MeshStandardMaterial(Object.assign({
-    color: getCssColor(variableName, fallback),
-    roughness: 0.86,
-    metalness: 0.02,
-    flatShading: true
-  }, options || {}));
-
-  materials.push(material);
-  materialBindings.push({ material: material, variableName: variableName, fallback: fallback });
-  return material;
-}
-
-function createFixedMaterial(color, options) {
+function createMaterial(color, options) {
   var material = new THREE.MeshStandardMaterial(Object.assign({
     color: color,
-    roughness: 0.86,
-    metalness: 0.02,
+    roughness: 0.88,
+    metalness: 0,
     flatShading: true
   }, options || {}));
-
   materials.push(material);
   return material;
 }
@@ -53,8 +34,49 @@ function trackGeometry(geometry) {
   return geometry;
 }
 
+function createVoxelGeometry() {
+  var geometry = new THREE.BoxGeometry(1, 1, 1, 3, 3, 3);
+  var positions = geometry.attributes.position;
+  var point = new THREE.Vector3();
+  var core = new THREE.Vector3();
+  var normal = new THREE.Vector3();
+  var inner = 0.3;
+  for (var index = 0; index < positions.count; index += 1) {
+    point.fromBufferAttribute(positions, index);
+    ["x", "y", "z"].forEach(function (axis) {
+      if (Math.abs(point[axis]) < 0.49) {
+        point[axis] = Math.sign(point[axis]) * inner;
+      }
+    });
+    core.copy(point).clampScalar(-inner, inner);
+    normal.subVectors(point, core).normalize();
+    point.copy(core).addScaledVector(normal, 0.5 - inner);
+    positions.setXYZ(index, point.x, point.y, point.z);
+  }
+  geometry.computeVertexNormals();
+  geometry.clearGroups();
+  return trackGeometry(geometry);
+}
+
+function addVoxel(parent, size, position, material, rotation, shade) {
+  parent.updateWorldMatrix(true, false);
+  var dummy = new THREE.Object3D();
+  dummy.position.set(position[0], position[1], position[2]);
+  dummy.scale.set(size[0], size[1], size[2]);
+  if (rotation) {
+    dummy.rotation.set(rotation[0], rotation[1], rotation[2]);
+  }
+  dummy.updateMatrix();
+  var matrix = new THREE.Matrix4().multiplyMatrices(parent.matrixWorld, dummy.matrix);
+  if (!voxelBatches.has(material)) {
+    voxelBatches.set(material, []);
+  }
+  voxelBatches.get(material).push({ matrix: matrix, shade: shade || 1 });
+}
+
 function addBox(parent, size, position, material, rotation) {
-  var mesh = new THREE.Mesh(trackGeometry(new THREE.BoxGeometry(size[0], size[1], size[2])), material);
+  var geometry = trackGeometry(new THREE.BoxGeometry(size[0], size[1], size[2]));
+  var mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(position[0], position[1], position[2]);
   if (rotation) {
     mesh.rotation.set(rotation[0], rotation[1], rotation[2]);
@@ -65,148 +87,295 @@ function addBox(parent, size, position, material, rotation) {
   return mesh;
 }
 
-function addCylinder(parent, radiusTop, radiusBottom, height, segments, position, material, rotation) {
-  var mesh = new THREE.Mesh(trackGeometry(new THREE.CylinderGeometry(radiusTop, radiusBottom, height, segments)), material);
-  mesh.position.set(position[0], position[1], position[2]);
-  if (rotation) {
-    mesh.rotation.set(rotation[0], rotation[1], rotation[2]);
-  }
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  parent.add(mesh);
-  return mesh;
+function voxelNoise(x, y, z) {
+  var value = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453;
+  return value - Math.floor(value);
 }
 
-function buildDesk(group, palette) {
-  addBox(group, [5.8, 0.36, 3.6], [0, 1.8, 0], palette.deskTop);
-  [[-2.45, 0.8, -1.45], [2.45, 0.8, -1.45], [-2.45, 0.8, 1.45], [2.45, 0.8, 1.45]].forEach(function (position, index) {
-    addBox(group, [0.34, 1.8, 0.34], position, index % 2 ? palette.deskSide : palette.deskFront);
+function addVoxelBlob(parent, radii, position, material, size, rotation, power, colorAt, surface) {
+  var blob = new THREE.Group();
+  blob.position.set(position[0], position[1], position[2]);
+  if (rotation) {
+    blob.rotation.set(rotation[0], rotation[1], rotation[2]);
+  }
+  parent.add(blob);
+  var countX = Math.ceil(radii[0] / size);
+  var countY = Math.ceil(radii[1] / size);
+  var countZ = Math.ceil(radii[2] / size);
+  var exponent = power || 3;
+  function contains(x, y, z) {
+    return Math.pow(Math.abs(x * size / radii[0]), exponent)
+      + Math.pow(Math.abs(y * size / radii[1]), exponent)
+      + Math.pow(Math.abs(z * size / radii[2]), exponent) <= 1;
+  }
+  for (var x = -countX; x <= countX; x += 1) {
+    for (var y = -countY; y <= countY; y += 1) {
+      for (var z = -countZ; z <= countZ; z += 1) {
+        if (!contains(x, y, z)) {
+          continue;
+        }
+        if (contains(x - 1, y, z) && contains(x + 1, y, z)
+          && contains(x, y - 1, z) && contains(x, y + 1, z)
+          && contains(x, y, z - 1) && contains(x, y, z + 1)) {
+          continue;
+        }
+        var color = colorAt ? colorAt(x * size, y * size, z * size) : material;
+        var shade = 0.97 + voxelNoise(x + position[0], y + position[1], z + position[2]) * 0.06;
+        var scale = 1;
+        if (surface) {
+          var distance = Math.pow(Math.abs(x * size / radii[0]), exponent)
+            + Math.pow(Math.abs(y * size / radii[1]), exponent)
+            + Math.pow(Math.abs(z * size / radii[2]), exponent);
+          scale += (Math.pow(distance, -1 / exponent) - 1) * surface;
+        }
+        var extent = size * (surface ? 1.3 : 1.08);
+        var voxelRotation = surface ? [
+          (voxelNoise(x, y, z) - 0.5) * 0.08,
+          (voxelNoise(y, z, x) - 0.5) * 0.08,
+          (voxelNoise(z, x, y) - 0.5) * 0.08
+        ] : null;
+        addVoxel(blob, [extent, extent, extent], [x * size * scale, y * size * scale, z * size * scale], color, voxelRotation, shade);
+      }
+    }
+  }
+  return blob;
+}
+
+function buildSofa(group, palette) {
+  addBox(group, [6.12, 0.4, 5.18], [0, 0.24, 0], palette.wood);
+  for (var x = -2.88; x <= 2.89; x += 0.32) {
+    for (var z = -2.4; z <= 2.41; z += 0.32) {
+      if (Math.abs(x) > 2.55 || Math.abs(z) > 2.07) {
+        addVoxel(group, [0.35, 0.58, 0.35], [x, 0.3, z], palette.wood, null, 0.91 + voxelNoise(x, 0, z) * 0.1);
+      }
+    }
+  }
+  addVoxelBlob(group, [2.94, 0.34, 2.46], [0, 0.72, 0], palette.cream, 0.32, null, 5);
+  addVoxelBlob(group, [2.94, 1.45, 0.42], [0, 1.9, -2.4], palette.wood, 0.32, null, 8);
+  addVoxelBlob(group, [1.47, 1.14, 0.65], [1.37, 2.2, -1.92], palette.cream, 0.32, [-0.15, 0, -0.06], 2.8, null, 0.78);
+  addVoxelBlob(group, [1.4, 1.1, 0.61], [-1.48, 2.11, -1.82], palette.cream, 0.32, [-0.17, 0.02, 0.1], 2.8, null, 0.78);
+  addVoxelBlob(group, [0.46, 1.04, 0.36], [-1.91, 2.16, -1.39], palette.cream, 0.3, [-0.15, 0.04, 0.12], 2.6, null, 0.7);
+  addVoxelBlob(group, [0.5, 0.61, 0.41], [-1.05, 1.72, -1.1], palette.cream, 0.3, [-0.14, 0.04, -0.1], 2.5, null, 0.7);
+  var pillow = addVoxelBlob(group, [0.96, 1.4, 0.53], [-0.55, 2.64, -1.89], palette.pillowEdge, 0.28, [-0.14, 0, -0.15], 2.7, null, 0.78);
+  for (var row = -6; row <= 6; row += 1) {
+    for (var col = -3; col <= 3; col += 1) {
+      var px = col * 0.14 + (row % 2 ? 0.025 : 0);
+      var py = row * 0.18;
+      var pz = 0.53 * Math.pow(Math.max(0, 1 - Math.pow(Math.abs(py / 1.4), 2.7) - Math.pow(Math.abs(px / 0.96), 2.7)), 1 / 2.7);
+      var weaveMaterial = (row + col) % 3 ? palette.weave : palette.pillow;
+      addVoxel(pillow, [0.16, 0.16, 0.13], [px, py, pz + 0.05], weaveMaterial, [0, 0, row % 2 ? -0.09 : 0.09], 0.93 + voxelNoise(col, row, 2) * 0.09);
+    }
+  }
+  [-1, 1].forEach(function (side) {
+    addVoxelBlob(group, [0.56, 0.68, 1.94], [side * 2.62, 1.24, -0.06], palette.cream, 0.32, null, 3, null, 0.78);
+    addVoxelBlob(group, [0.78, 0.65, 1.05], [side * 2.3, 1.33, 0.71], palette.cream, 0.32, [0.02, side * 0.06, side * 0.11], 2.6, null, 0.78);
+    addVoxelBlob(group, [0.78, 0.55, 0.77], [side * 2.18, 1.11, 1.83], palette.cream, 0.32, [0, 0, side * 0.08], 2.5, null, 0.76);
+  });
+  addVoxelBlob(group, [0.69, 0.67, 0.71], [2.41, 1.31, 1.7], palette.cream, 0.32, [0, -0.05, 0.12], 2.5, null, 0.78);
+  addVoxelBlob(group, [2.78, 0.39, 0.51], [0, 0.73, 2.23], palette.cream, 0.32, null, 4);
+  [-2.01, -0.68, 0.66, 2].forEach(function (x, index) {
+    addVoxelBlob(group, [0.85, 0.48, 0.62], [x, 0.93 + (index % 2) * 0.04, 2.21], palette.cream, 0.32, [0, index % 2 ? -0.06 : 0.06, index % 2 ? -0.08 : 0.08], 2.6, null, 0.78);
+  });
+  addVoxelBlob(group, [0.95, 0.39, 0.75], [-1.46, 1.12, -0.59], palette.cream, 0.32, [0.08, 0, 0.12], 2.8, null, 0.75);
+}
+
+function addVoxelPattern(parent, rows, size, position, palette, depthAt, thickness) {
+  var width = rows[0].length;
+  rows.forEach(function (row, rowIndex) {
+    for (var col = 0; col < row.length; col += 1) {
+      var material = palette[row[col]];
+      if (!material) {
+        continue;
+      }
+      var x = (col - (width - 1) / 2) * size;
+      var y = ((rows.length - 1) / 2 - rowIndex) * size;
+      var z = depthAt ? depthAt(x, y) : 0;
+      addVoxel(parent, [size * 1.06, size * 1.06, thickness || size * 1.06], [position[0] + x, position[1] + y, position[2] + z], material);
+    }
   });
 }
 
 function buildCat(group, palette) {
-  addBox(group, [1.35, 1.55, 1.15], [0.45, 3.02, -0.65], palette.furFront);
-  addBox(group, [1.45, 1.25, 1.25], [0.45, 4.18, -0.55], palette.furTop);
-
-  var earGeometry = trackGeometry(new THREE.ConeGeometry(0.34, 0.72, 4));
-  [-0.05, 0.95].forEach(function (x, index) {
-    var ear = new THREE.Mesh(earGeometry, index === 0 ? palette.furTop : palette.furSide);
-    ear.position.set(x, 5.05, -0.55);
-    ear.rotation.y = Math.PI * 0.25;
-    ear.castShadow = true;
-    group.add(ear);
+  var cat = new THREE.Group();
+  cat.name = "pet-cat";
+  cat.position.set(0.92, 0, -0.78);
+  group.add(cat);
+  addVoxelBlob(cat, [0.68, 0.64, 0.62], [0, 1.32, -0.03], palette.brown, 0.16, null, 2.8, function (x, y, z) {
+    if (z > 0.16 && Math.abs(x) < 0.48) {
+      return palette.white;
+    }
+    return y > 0.21 || (x > 0.4 && z < -0.12) ? palette.darkBrown : palette.brown;
   });
-
-  addBox(group, [0.72, 0.36, 0.24], [0.45, 4.03, 0.08], palette.muzzle);
-  addBox(group, [0.11, 0.11, 0.08], [0.12, 4.38, 0.1], palette.furDark);
-  addBox(group, [0.11, 0.11, 0.08], [0.78, 4.38, 0.1], palette.furDark);
-  addBox(group, [0.15, 0.1, 0.09], [0.45, 4.1, 0.23], palette.furDark);
-
-  addBox(group, [0.32, 0.62, 0.42], [0.02, 2.43, 0.18], palette.furFront, [-0.08, 0, 0]);
-  addBox(group, [0.32, 0.62, 0.42], [0.86, 2.43, 0.18], palette.furFront, [-0.08, 0, 0]);
-
-  var tail = new THREE.Group();
-  tail.position.set(1.08, 3.05, -1.02);
-  addBox(tail, [1.25, 0.34, 0.34], [0.58, 0.14, 0], palette.furSide, [0, 0.22, 0.28]);
-  addBox(tail, [0.95, 0.31, 0.31], [1.44, 0.45, -0.12], palette.furFront, [0, -0.25, 0.52]);
-  group.add(tail);
+  addVoxelBlob(cat, [0.44, 0.23, 0.63], [0.4, 1.22, 0.76], palette.brown, 0.15, [0, -0.32, 0], 2.6);
+  [0.45, 0.73, 1.01].forEach(function (z) {
+    addVoxelBlob(cat, [0.39, 0.09, 0.08], [0.44, 1.39, z], palette.darkBrown, 0.1, [0, -0.32, 0], 3);
+  });
+  addVoxelBlob(cat, [0.23, 0.23, 0.62], [-0.86, 1.51, 0.64], palette.white, 0.13, [-0.08, -0.55, -0.06], 3, null, 0.3);
+  addVoxelBlob(cat, [0.23, 0.22, 0.6], [-0.2, 1.48, 0.64], palette.brown, 0.13, [-0.05, -0.72, 0], 3);
+  addVoxelBlob(cat, [0.29, 0.15, 0.27], [-1.16, 1.437, 1.11], palette.white, 0.12, [0, -0.15, -0.05], 3, null, 0.3);
+  addVoxelBlob(cat, [0.25, 0.15, 0.25], [-0.67, 1.437, 1.1], palette.white, 0.12, [0, -0.12, 0.04], 3, null, 0.3);
+  addVoxelBlob(cat, [0.7, 0.16, 0.5], [0, 1.75, 0.1], palette.collar, 0.15, [0, 0.12, 0], 3);
+  addVoxel(cat, [0.2, 0.22, 0.17], [-0.2, 1.64, 0.62], palette.collar);
+  addVoxel(cat, [0.17, 0.16, 0.17], [0.16, 1.66, 0.61], palette.collarDark);
+  var head = new THREE.Group();
+  head.name = "pet-head";
+  head.position.set(0, 2.55, -0.07);
+  head.rotation.set(-0.03, 0.58, -0.035);
+  cat.add(head);
+  addVoxelBlob(head, [0.91, 0.72, 0.61], [0, 0, -0.06], palette.brown, 0.15, null, 2.8, function (x, y, z) {
+    if (Math.abs(x) > 0.66 || y > 0.52) {
+      return palette.darkBrown;
+    }
+    return y < -0.45 && z > 0.08 ? palette.white : palette.brown;
+  });
+  var faceRows = [
+    "....DDTWTTDD....",
+    "..DDTHTWHTTDD...",
+    ".DDTHHTWWTHHTDD.",
+    ".DTHDHTWWTHDHTD.",
+    "DTHHHTWWWWTHHHTD",
+    "DTHHHTWWWWTHHHTD",
+    "DTHHHTWWWWTHHHTD",
+    "DTHHHWWWWWWHHHTD",
+    "DTHHWWWWWWWWHHTD",
+    ".THWWWWWWWWWWHT.",
+    ".TWWWWWWWWWWWWT.",
+    "..WWWWWWWWWWWW..",
+    "...WWWWWWWWWW..."
+  ];
+  var furPalette = { D: palette.darkBrown, T: palette.brown, H: palette.honey, W: palette.white };
+  addVoxelPattern(head, faceRows, 0.115, [0, -0.02, 0.55], furPalette, function (x, y) {
+    return -0.22 * Math.pow(Math.abs(x), 2) - 0.12 * Math.pow(Math.abs(y), 2);
+  }, 0.22);
+  [-1, 1].forEach(function (side) {
+    var ear = new THREE.Group();
+    ear.position.set(side * 0.67, 0.77, -0.06);
+    ear.rotation.z = -side * 0.16;
+    head.add(ear);
+    var earRows = [
+      "..DD..",
+      ".DDDD.",
+      ".DPPD.",
+      "DPPPPD",
+      "DPPPPD",
+      "DDPPDD",
+      ".DDDD."
+    ];
+    addVoxelPattern(ear, earRows, 0.125, [0, 0, 0], { D: palette.darkBrown, P: palette.brown }, null, 0.38);
+    addVoxelPattern(ear, earRows, 0.125, [0, 0, 0.22], { P: palette.pink }, null, 0.075);
+    var eyeX = side * 0.47;
+    var eyeRows = [
+      ".DDDDD.",
+      "DOOOOPD",
+      "DOOPPPD",
+      "DOLPPPD",
+      "DOLLLOD",
+      ".DDDDD."
+    ];
+    addVoxelPattern(head, eyeRows, 0.09, [eyeX, -0.08, 0.65], { D: palette.darkBrown, O: palette.olive, L: palette.oliveLight, P: palette.black }, null, 0.11);
+    addVoxel(head, [0.115, 0.115, 0.035], [eyeX + 0.055, 0.015, 0.728], palette.glint);
+    addVoxelBlob(head, [0.32, 0.2, 0.19], [side * 0.25, -0.47, 0.65], palette.white, 0.115, null, 3, null, 0.3);
+  });
+  addVoxel(head, [0.21, 0.13, 0.11], [0, -0.38, 0.845], palette.nose);
+  addVoxel(head, [0.095, 0.095, 0.075], [0, -0.47, 0.845], palette.nose);
+  addVoxel(head, [0.035, 0.09, 0.035], [0, -0.54, 0.805], palette.mouth);
+  addVoxel(head, [0.13, 0.035, 0.04], [0, -0.595, 0.765], palette.mouth);
+  addVoxelBlob(group, [0.37, 0.39, 0.37], [-0.2, 1.46, -0.6], palette.yellow, 0.14, null, 2.2, function (x, y, z) {
+    if (Math.abs(y + x * 0.3) < 0.07) {
+      return palette.blue;
+    }
+    return Math.abs(y - x * 0.4 - 0.12) < 0.04 ? palette.red : palette.yellow;
+  });
 }
 
 function buildLaptop(group, palette) {
-  addBox(group, [2.2, 0.14, 1.35], [-0.72, 2.05, 0.62], palette.laptopDark);
-
-  var screen = new THREE.Group();
-  screen.position.set(-0.72, 2.85, 0.1);
-  screen.rotation.x = -0.2;
-  addBox(screen, [2.2, 1.45, 0.13], [0, 0, 0], palette.laptopDark);
-  addBox(screen, [1.9, 1.15, 0.05], [0, 0, 0.09], palette.laptop);
-  addBox(screen, [0.08, 0.62, 0.05], [-0.32, 0, 0.135], palette.code, [0, 0, 0.64]);
-  addBox(screen, [0.08, 0.62, 0.05], [0.32, 0, 0.135], palette.code, [0, 0, -0.64]);
-  group.add(screen);
-
-  addBox(group, [1.55, 0.05, 0.86], [-0.72, 2.14, 0.66], palette.laptopLight);
-}
-
-function buildPlant(group, palette) {
-  addCylinder(group, 0.38, 0.3, 0.5, 5, [-2.08, 2.23, -0.58], palette.pot);
-  addBox(group, [0.1, 0.85, 0.1], [-2.08, 2.82, -0.58], palette.stem);
-  addBox(group, [0.55, 0.18, 0.32], [-2.32, 3.05, -0.58], palette.leaf, [0, 0.18, -0.45]);
-  addBox(group, [0.55, 0.18, 0.32], [-1.85, 3.18, -0.58], palette.leafLight, [0, -0.2, 0.45]);
-}
-
-function buildMug(group, palette) {
-  addCylinder(group, 0.34, 0.32, 0.52, 8, [2.08, 2.24, 0.35], palette.mug);
-  var handle = new THREE.Mesh(trackGeometry(new THREE.TorusGeometry(0.28, 0.065, 4, 8, Math.PI * 1.35)), palette.mugSide);
-  handle.position.set(2.38, 2.25, 0.35);
-  handle.rotation.set(Math.PI / 2, 0, Math.PI / 2);
-  handle.castShadow = true;
-  group.add(handle);
+  var laptop = new THREE.Group();
+  laptop.name = "pet-laptop";
+  laptop.position.set(-0.72, 1.11, 0.52);
+  laptop.rotation.y = -0.035;
+  group.add(laptop);
+  addVoxel(laptop, [2.72, 0.14, 2.6], [0, 0, -0.05], palette.silver);
+  addBox(laptop, [2.47, 0.014, 1.16], [0, 0.076, 0.04], palette.keyboardWell);
+  for (var row = 0; row < 5; row += 1) {
+    for (var col = 0; col < 11; col += 1) {
+      addVoxel(laptop, [0.17, 0.035, 0.15], [-1.1 + col * 0.22, 0.097, -0.36 + row * 0.2], palette.keys);
+    }
+  }
+  addVoxel(laptop, [0.93, 0.035, 0.13], [0, 0.097, -0.58], palette.keys);
+  addVoxel(laptop, [0.76, 0.02, 0.35], [0, 0.081, -1.01], palette.trackpad);
+  [-1, 1].forEach(function (side) {
+    for (var port = 0; port < 3; port += 1) {
+      addBox(laptop, [0.014, 0.06, 0.13], [side * 1.365, -0.01, -0.39 + port * 0.28], palette.port);
+    }
+  });
+  var lid = new THREE.Group();
+  lid.position.set(0, 0.03, 1.14);
+  lid.rotation.x = 0.14;
+  laptop.add(lid);
+  addVoxel(lid, [2.74, 1.96, 0.105], [0, 0.98, 0], palette.silver);
+  addBox(lid, [2.52, 1.72, 0.014], [0, 0.99, -0.062], palette.screen);
+  [[-0.14, 0.14], [0.14, 0.14], [-0.14, -0.14], [0.14, -0.14]].forEach(function (point) {
+    addBox(lid, [0.19, 0.19, 0.014], [point[0], 0.98 + point[1], 0.058], palette.logo);
+  });
+  addBox(lid, [0.045, 0.045, 0.014], [0, 1.84, -0.064], palette.port);
 }
 
 function createSceneObjects() {
+  voxelGeometry = createVoxelGeometry();
   var palette = {
-    furTop: createMaterial("--pet-fur-top", "#d8b79b"),
-    furFront: createMaterial("--pet-fur-front", "#b98266"),
-    furSide: createMaterial("--pet-fur-side", "#8f604d"),
-    furDark: createMaterial("--pet-fur-dark", "#5b3a31"),
-    deskTop: createMaterial("--pet-desk-top", "#9f6849"),
-    deskFront: createMaterial("--pet-desk-front", "#754833"),
-    deskSide: createMaterial("--pet-desk-side", "#5a3729"),
-    laptop: createMaterial("--pet-laptop", "#198396", { roughness: 0.68 }),
-    laptopDark: createMaterial("--pet-laptop-dark", "#0d5d6a", { roughness: 0.7 }),
-    laptopLight: createMaterial("--pet-laptop-light", "#38afbd", { roughness: 0.68 }),
-    muzzle: createFixedMaterial("#ead1bc"),
-    code: createFixedMaterial("#dffcff", { emissive: "#15535d", emissiveIntensity: 0.3 }),
-    pot: createFixedMaterial("#b9c1cc"),
-    mug: createFixedMaterial("#d9dee7"),
-    mugSide: createFixedMaterial("#a6afbc"),
-    stem: createFixedMaterial("#557246"),
-    leaf: createFixedMaterial("#6e934f"),
-    leafLight: createFixedMaterial("#8cac62")
+    cream: createMaterial("#f8e4c4"),
+    wood: createMaterial("#b98047"),
+    pillow: createMaterial("#e9b66b"),
+    pillowEdge: createMaterial("#f4d49e"),
+    weave: createMaterial("#dca14e"),
+    white: createMaterial("#fff1d9"),
+    brown: createMaterial("#765033"),
+    darkBrown: createMaterial("#392417"),
+    honey: createMaterial("#a47545"),
+    pink: createMaterial("#efa6a0"),
+    nose: createMaterial("#f29c8d"),
+    mouth: createMaterial("#875044"),
+    olive: createMaterial("#969447", { roughness: 0.55 }),
+    oliveLight: createMaterial("#b9b567", { roughness: 0.55 }),
+    black: createMaterial("#161411", { roughness: 0.4 }),
+    glint: createMaterial("#fff9ee", { emissive: "#ffffff", emissiveIntensity: 0.1 }),
+    collar: createMaterial("#849653"),
+    collarDark: createMaterial("#687d40"),
+    yellow: createMaterial("#ddad19"),
+    blue: createMaterial("#39717b"),
+    red: createMaterial("#b4604c"),
+    silver: createMaterial("#c4bdcb", { roughness: 0.68, metalness: 0.08 }),
+    keys: createMaterial("#e1d4d7", { roughness: 0.7 }),
+    keyboardWell: createMaterial("#9f949b"),
+    trackpad: createMaterial("#c9bec5"),
+    port: createMaterial("#423938"),
+    screen: createMaterial("#263335", { roughness: 0.4 }),
+    logo: createMaterial("#eee0d5")
   };
-
   var group = new THREE.Group();
-  group.position.set(0, 0.05, 0);
+  Object.keys(palette).forEach(function (name) {
+    palette[name].name = name;
+  });
   scene.add(group);
-
-  buildDesk(group, palette);
+  buildSofa(group, palette);
   buildCat(group, palette);
   buildLaptop(group, palette);
-  buildPlant(group, palette);
-  buildMug(group, palette);
-
-  shadowMaterial = new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.17 });
-  materials.push(shadowMaterial);
-  var shadowPlane = new THREE.Mesh(trackGeometry(new THREE.PlaneGeometry(8.5, 6.6)), shadowMaterial);
-  shadowPlane.rotation.x = -Math.PI / 2;
-  shadowPlane.position.y = -0.04;
-  shadowPlane.receiveShadow = true;
-  scene.add(shadowPlane);
-}
-
-function applyTheme() {
-  if (disposed) {
-    return;
-  }
-
-  materialBindings.forEach(function (binding) {
-    binding.material.color.set(getCssColor(binding.variableName, binding.fallback));
+  voxelBatches.forEach(function (instances, material) {
+    var mesh = new THREE.InstancedMesh(voxelGeometry, material, instances.length);
+    var color = new THREE.Color();
+    instances.forEach(function (instance, index) {
+      mesh.setMatrixAt(index, instance.matrix);
+      color.setRGB(instance.shade, instance.shade, instance.shade);
+      mesh.setColorAt(index, color);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.instanceColor.needsUpdate = true;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+    instancedMeshes.push(mesh);
   });
-
-  var isDark = document.documentElement.getAttribute("data-theme") === "dark";
-  if (shadowMaterial) {
-    shadowMaterial.opacity = isDark ? 0.28 : 0.17;
-  }
-  if (keyLight) {
-    keyLight.intensity = isDark ? 3.2 : 2.7;
-  }
-  if (fillLight) {
-    fillLight.intensity = isDark ? 1.35 : 1.75;
-  }
-
-  if (renderer && scene && camera) {
-    renderer.render(scene, camera);
-  }
+  voxelBatches.clear();
 }
 
 function resizeRenderer() {
@@ -267,13 +436,13 @@ function disposePet3D() {
   if (resizeObserver) {
     resizeObserver.disconnect();
   }
-  if (themeObserver) {
-    themeObserver.disconnect();
-  }
   if (controls) {
     controls.dispose();
   }
 
+  instancedMeshes.forEach(function (mesh) {
+    mesh.dispose();
+  });
   geometries.forEach(function (geometry) {
     geometry.dispose();
   });
@@ -298,40 +467,45 @@ function initializePet3D() {
 
   try {
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-    camera.position.set(7.5, 6.2, 8.5);
+    camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+    camera.position.set(9.8, 10.4, 10.6);
 
     renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setClearColor(0x000000, 0);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.18;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFShadowMap;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.domElement.className = "pet-3d-canvas";
     renderer.domElement.setAttribute("aria-hidden", "true");
     host.appendChild(renderer.domElement);
 
     controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 2.2, 0);
+    controls.target.set(0, 1.55, 0);
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
     controls.enablePan = false;
     controls.rotateSpeed = 0.7;
     controls.zoomSpeed = 0.8;
-    controls.minDistance = 7;
-    controls.maxDistance = 15;
-    controls.minPolarAngle = 0.55;
+    controls.minDistance = 9.5;
+    controls.maxDistance = 23;
+    controls.minPolarAngle = 0.6;
     controls.maxPolarAngle = 1.45;
     controls.touches.ONE = THREE.TOUCH.ROTATE;
     controls.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
     controls.update();
 
-    fillLight = new THREE.HemisphereLight(0xf5f8ff, 0x7b6658, 1.75);
+    fillLight = new THREE.HemisphereLight(0xfff1dd, 0x80674e, 1.65);
     scene.add(fillLight);
 
-    keyLight = new THREE.DirectionalLight(0xffffff, 2.7);
-    keyLight.position.set(5, 9, 7);
+    keyLight = new THREE.DirectionalLight(0xffdfb0, 4.2);
+    keyLight.position.set(-3.8, 8, 4.5);
     keyLight.castShadow = true;
-    keyLight.shadow.mapSize.set(1024, 1024);
+    keyLight.shadow.mapSize.set(2048, 2048);
+    keyLight.shadow.normalBias = 0.025;
+    keyLight.shadow.bias = -0.00015;
+    keyLight.shadow.radius = 3;
     keyLight.shadow.camera.near = 0.5;
     keyLight.shadow.camera.far = 30;
     keyLight.shadow.camera.left = -7;
@@ -342,15 +516,11 @@ function initializePet3D() {
 
     createSceneObjects();
     resizeRenderer();
-    applyTheme();
     renderer.render(scene, camera);
     petRoot.classList.add("is-3d-ready");
 
     resizeObserver = new ResizeObserver(resizeRenderer);
     resizeObserver.observe(host);
-
-    themeObserver = new MutationObserver(applyTheme);
-    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("pagehide", disposePet3D, { once: true });

@@ -1,0 +1,13 @@
+.vscode/*
+!.vscode/tasks.json
+docs/superpowers/
+kinhgnhiem/
+node_modules/
+tests/
+_site/
+.superpowers/
+.chrome-*/
+.edge-*/
+.pet-*.png
+.DS_Store
+Thumbs.db
